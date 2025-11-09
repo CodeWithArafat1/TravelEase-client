@@ -11,7 +11,6 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-     dispatch(setLoading(true));
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         dispatch(
@@ -24,10 +23,10 @@ const App = () => {
             accessToken: currentUser.accessToken,
           })
         );
-        dispatch(setLoading(false));
       } else {
         dispatch(setUser(null));
       }
+      dispatch(setLoading(false));
     });
     return () => unsubscribe();
   }, [dispatch]);

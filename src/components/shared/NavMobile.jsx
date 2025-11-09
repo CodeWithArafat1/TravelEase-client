@@ -79,27 +79,31 @@ const NavMobile = ({ setShowMenu, showMenu }) => {
           >
             All Vehicles
           </NavLink>
-          <NavLink
-            to="/addVehicles"
-            className="nav-link"
-            onClick={() => setShowMenu(false)}
-          >
-            Add Vehicle
-          </NavLink>
-          <NavLink
-            to="/myVehicles"
-            className="nav-link"
-            onClick={() => setShowMenu(false)}
-          >
-            My Vehicles
-          </NavLink>
-          <NavLink
-            to="/myBookings"
-            className="nav-link"
-            onClick={() => setShowMenu(false)}
-          >
-            My Bookings
-          </NavLink>
+          {user && (
+            <>
+              <NavLink
+                to="/addVehicles"
+                className="nav-link"
+                onClick={() => setShowMenu(false)}
+              >
+                Add Vehicle
+              </NavLink>
+              <NavLink
+                to="/myVehicles"
+                className="nav-link"
+                onClick={() => setShowMenu(false)}
+              >
+                My Vehicles
+              </NavLink>
+              <NavLink
+                to="/myBookings"
+                className="nav-link"
+                onClick={() => setShowMenu(false)}
+              >
+                My Bookings
+              </NavLink>
+            </>
+          )}
 
           {user ? (
             <button

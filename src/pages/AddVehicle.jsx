@@ -1,12 +1,28 @@
+import { useSelector } from "react-redux";
+import useAxios from "../hooks/useAxios";
+import toast from "react-hot-toast";
+
 const AddVehicle = () => {
-  const handelAddVehicle = (e) => {
+  const { user } = useSelector((store) => store.userAuth);
+  const axiosInstance = useAxios()
+  const handelAddVehicle = async (e) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
     const vehicleData = Object.fromEntries(formData.entries());
-    vehicleData.displayName = "Arafat Nill";
-    vehicleData.email = "arafat@gmail.com";
-    console.log(vehicleData);
+    vehicleData.displayName = user?.displayName;
+    vehicleData.photoURL = user?.photoURL;
+    vehicleData.email = user?.email;
+    vehicleData.createAt = new Date().toISOString()
+    try {
+      const { data } = await axiosInstance.post("/vehicles", vehicleData);
+      if(data.insertedId){
+        toast.success('Your vehicles added!')
+      }
+      console.log(data)
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
   return (
     <div className="max-w-2xl my-20 mx-auto p-6 bg-base-100 rounded-lg shadow-sm border border-gray-300/20">
@@ -37,7 +53,8 @@ const AddVehicle = () => {
               type="text"
               id="owner"
               name="owner"
-              defaultValue="John Doe"
+              defaultValue={user?.displayName}
+              readOnly
               className="input input-bordered w-full focus:outline-none focus:ring-0"
             />
           </div>

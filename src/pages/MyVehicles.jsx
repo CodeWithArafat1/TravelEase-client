@@ -1,69 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import UpdateVehicleModal from "../components/UpdateVehicleModal";
 import { updateModalOpen } from "../redux/features/updateModalSlice";
 import { useDispatch } from "react-redux";
+import useAxios from "../hooks/useAxios";
+import toast from "react-hot-toast";
+import FullLoader from "../components/shared/loader/FullLoader";
 
 const MyVehicles = () => {
-  const dispatch = useDispatch()
-  const vehicles = [
-    {
-      id: 1,
-      vehicleName: "Toyota Corolla",
-      category: "Sedan",
-      pricePerDay: 70,
-      location: "Dhaka, Bangladesh",
-      availability: "Available",
-      coverImage:
-        "https://plus.unsplash.com/premium_photo-1673002094223-c6b534dcb861?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1pbi1zYW1lLXNlcmllc3wyfHx8ZW58MHx8fHx8&auto=format&fit=crop&q=60&w=500",
-    },
-    {
-      id: 2,
-      vehicleName: "Honda CR-V",
-      category: "SUV",
-      pricePerDay: 85,
-      location: "Chittagong, Bangladesh",
-      availability: "Booked",
-      coverImage:
-        "https://plus.unsplash.com/premium_photo-1673002094223-c6b534dcb861?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1pbi1zYW1lLXNlcmllc3wyfHx8ZW58MHx8fHx8&auto=format&fit=crop&q=60&w=500",
-    },
-    {
-      id: 3,
-      vehicleName: "Tesla Model 3",
-      category: "Electric",
-      pricePerDay: 120,
-      location: "Sylhet, Bangladesh",
-      availability: "Available",
-      coverImage:
-        "https://plus.unsplash.com/premium_photo-1673002094223-c6b534dcb861?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1pbi1zYW1lLXNlcmllc3wyfHx8ZW58MHx8fHx8&auto=format&fit=crop&q=60&w=500",
-    },
-    {
-      id: 4,
-      vehicleName: "Toyota Hiace",
-      category: "Van",
-      pricePerDay: 100,
-      location: "Rajshahi, Bangladesh",
-      availability: "Available",
-      coverImage:
-        "https://plus.unsplash.com/premium_photo-1673002094223-c6b534dcb861?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1pbi1zYW1lLXNlcmllc3wyfHx8ZW58MHx8fHx8&auto=format&fit=crop&q=60&w=500",
-    },
-    {
-      id: 5,
-      vehicleName: "Nissan Leaf",
-      category: "Electric",
-      pricePerDay: 95,
-      location: "Khulna, Bangladesh",
-      availability: "Booked",
-      coverImage:
-        "https://plus.unsplash.com/premium_photo-1673002094223-c6b534dcb861?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1pbi1zYW1lLXNlcmllc3wyfHx8ZW58MHx8fHx8&auto=format&fit=crop&q=60&w=500",
-    },
-  ];
+  const [vehicles, setVehicles] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const axiosInstance = useAxios();
+  useEffect(() => {
+    setLoading(true);
+    const fetchData = async () => {
+      try {
+        const { data } = await axiosInstance.get(
+          "/myVehicles?email=isha@gmail.com"
+        );
+        setVehicles(data);
+      } catch (err) {
+        toast.error(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [axiosInstance]);
+
+  if(loading){
+    return <FullLoader/>
+  }
 
   return (
     <div className="container mx-auto px-4 py-10">
       <div className=" mb-6 gap-4">
         <h2 className="text-xl sm:text-2xl font-bold">My Vehicles</h2>
-       
       </div>
 
       <div className="overflow-x-auto bg-base-100 rounded-lg shadow-sm">
@@ -82,7 +55,7 @@ const MyVehicles = () => {
           </thead>
           <tbody>
             {vehicles.map((vehicle) => (
-              <tr key={vehicle.id}>
+              <tr key={vehicle._id}>
                 <td>
                   <div className="flex items-center space-x-2 sm:space-x-3">
                     <div className="avatar">
@@ -124,7 +97,10 @@ const MyVehicles = () => {
                     <button className="btn btn-xs btn-outline btn-info">
                       <FaEye className="h-3 w-3 sm:h-4 sm:w-4" />
                     </button>
-                    <button className="btn btn-xs btn-outline btn-warning" onClick={()=>dispatch(updateModalOpen())}>
+                    <button
+                      className="btn btn-xs btn-outline btn-warning"
+                      onClick={() => dispatch(updateModalOpen())}
+                    >
                       <FaEdit className="h-3 w-3 sm:h-4 sm:w-4" />
                     </button>
                     <button className="btn btn-xs btn-outline btn-error">
@@ -138,7 +114,7 @@ const MyVehicles = () => {
         </table>
       </div>
 
-      <UpdateVehicleModal/>
+      <UpdateVehicleModal />
     </div>
   );
 };

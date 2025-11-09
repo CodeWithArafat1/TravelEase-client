@@ -1,18 +1,20 @@
+import { format } from "date-fns";
 import { FaMapMarkerAlt, FaCalendarAlt, FaHeart, FaStar } from "react-icons/fa";
 import { Link } from "react-router";
 
 const ProductCard = ({ vehicle }) => {
   const {
-    id = 23,
-    vehicleName = "Suzuki Swift",
-    category = "Sedan",
-    pricePerDay = 45,
-    location = "Rajshahi, Bangladesh",
-    description = "Small, nimble car for urban driving. Perfect for city commutes with excellent fuel efficiency.",
-    availability = "Available",
-    availableFrom = "11/6/2025",
-    coverImage = "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=ijkl",
-  } = vehicle || {};
+    availability,
+    category,
+    coverImage,
+    createAt,
+    description,
+    location,
+    pricePerDay,
+    vehicleName,
+    _id,
+  } = vehicle;
+    const createdAtDate = vehicle.createAt ? new Date(vehicle.createAt) : null;
 
   return (
     <div className="card bg-base-100 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-base-300/30 group">
@@ -49,7 +51,7 @@ const ProductCard = ({ vehicle }) => {
 
         <div className="flex items-center mt-3 text-sm text-base-content/70">
           <FaCalendarAlt className="mr-2 text-primary" />
-          <span>Available from {availableFrom}</span>
+          <span>Available from {format(createdAtDate, "MMMM yyyy")}</span>
         </div>
 
         <div className="mt-3">
@@ -64,7 +66,7 @@ const ProductCard = ({ vehicle }) => {
 
         <div className="card-actions justify-end items-center mt-5">
           <Link
-            to={`/viewDetails/${id}`}
+            to={`/viewDetails/${_id}`}
             className="btn btn-md border-base-300  transition-all"
           >
             View Details

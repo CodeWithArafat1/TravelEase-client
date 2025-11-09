@@ -1,13 +1,70 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { signOut } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
 import { auth } from "../../firebase/firebase.config";
+const googleProvider = new GoogleAuthProvider();
 
+// logout
 export const logout = createAsyncThunk(
   "userAuth/logout",
   async (_, thankAPI) => {
     try {
       await signOut(auth);
-      return true
+      return true;
+    } catch (err) {
+      return thankAPI.rejectWithValue(err.message);
+    }
+  }
+);
+
+// google login
+export const googleLogin = createAsyncThunk(
+  "userAuth/googleLogin",
+  async (_, thankAPI) => {
+    try {
+      const createUser = await signInWithPopup(auth, googleProvider);
+      const user = createUser.user;
+      return user;
+    } catch (err) {
+      return thankAPI.rejectWithValue(err.message);
+    }
+  }
+);
+
+// Account Create
+export const createAccount = createAsyncThunk(
+  "userAuth/createAccount",
+  async ({ email, password, profileObj }, thankAPI) => {
+    try {
+      const createUser = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = createUser.user;
+      if (user) {
+        await updateProfile(user, profileObj);
+      }
+      return user;
+    } catch (err) {
+      return thankAPI.rejectWithValue(err.message);
+    }
+  }
+);
+
+export const signInEmail = createAsyncThunk(
+  "userAuth/signInEmail",
+  async ({ email, password }, thankAPI) => {
+    try {
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      const user = result.user;
+      return user;
     } catch (err) {
       return thankAPI.rejectWithValue(err.message);
     }
@@ -36,16 +93,64 @@ const userAuthSlice = createSlice({
   },
 
   extraReducers: (builder) => {
+    // sign out builder
     builder
       .addCase(logout.pending, (state) => {
         state.userLoading = true;
       })
       .addCase(logout.fulfilled, (state) => {
-        (state.user = null), (state.error = null), (state.userLoading = null);
+        state.user = null;
+        state.error = null;
+        state.userLoading = false;
       })
       .addCase(logout.rejected, (state, action) => {
-        state.userLoading = null;
+        state.userLoading = false;
         state.error = action.payload;
+      });
+
+    // google login builder
+    builder
+      .addCase(googleLogin.pending, (state) => {
+        state.userLoading = true;
+      })
+      .addCase(googleLogin.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.error = null;
+        state.userLoading = false;
+      })
+      .addCase(googleLogin.rejected, (state, action) => {
+        state.error = action.payload;
+        state.userLoading = false;
+      });
+
+    // create account
+    builder
+      .addCase(createAccount.pending, (state) => {
+        state.userLoading = true;
+      })
+      .addCase(createAccount.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.error = null;
+        state.userLoading = false;
+      })
+      .addCase(createAccount.rejected, (state, action) => {
+        state.error = action.payload;
+        state.userLoading = false;
+      });
+
+    // signin 
+    builder
+      .addCase(signInEmail.pending, (state) => {
+        state.userLoading = true;
+      })
+      .addCase(signInEmail.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.error = null;
+        state.userLoading = false;
+      })
+      .addCase(signInEmail.rejected, (state, action) => {
+        state.error = action.payload;
+        state.userLoading = false;
       });
   },
 });

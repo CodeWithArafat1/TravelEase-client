@@ -9,6 +9,7 @@ import ViewDetails from "../pages/ViewDetails";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
+import PrivetRoutes from "../privetRoutes/PrivetRoutes";
 
 const router = createBrowserRouter([
   {
@@ -25,19 +26,35 @@ const router = createBrowserRouter([
       },
       {
         path: "/addVehicles",
-        Component: AddVehicle,
+        element: (
+          <PrivetRoutes>
+            <AddVehicle />
+          </PrivetRoutes>
+        ),
       },
       {
         path: "/myVehicles",
-        Component: MyVehicles,
+        element: (
+          <PrivetRoutes>
+            <MyVehicles />
+          </PrivetRoutes>
+        ),
       },
       {
         path: "/myBookings",
-        Component: MyBookings,
+        element: (
+          <PrivetRoutes>
+            <MyBookings />
+          </PrivetRoutes>
+        ),
       },
       {
         path: "/viewDetails/:id",
-        Component: ViewDetails,
+        element: (
+          <PrivetRoutes>
+            <ViewDetails />
+          </PrivetRoutes>
+        ),
       },
       {
         path: "/auth/login",
@@ -50,9 +67,9 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '*',
-    Component: NotFound
-  }
+    path: "*",
+    Component: NotFound,
+  },
 ]);
 
 const AppRoutes = () => {

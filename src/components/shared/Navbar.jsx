@@ -7,10 +7,9 @@ import { useDispatch, useSelector } from "react-redux";
 import UserLoading from "./loader/UserLoading";
 import { logout } from "../../redux/auth/authSlice";
 
-
-const Navbar = ()=> {
+const Navbar = () => {
   const { user, userLoading } = useSelector((store) => store.userAuth);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem("theme");
     return savedTheme === "dark";
@@ -58,15 +57,19 @@ const Navbar = ()=> {
             <NavLink to="/allVehicles" className="nav-link">
               All Vehicles
             </NavLink>
-            <NavLink to="/addVehicles" className="nav-link">
-              Add Vehicle
-            </NavLink>
-            <NavLink to="/myVehicles" className="nav-link">
-              My Vehicles
-            </NavLink>
-            <NavLink to="/myBookings" className="nav-link">
-              My Bookings
-            </NavLink>
+            {user && (
+              <>
+                <NavLink to="/addVehicles" className="nav-link">
+                  Add Vehicle
+                </NavLink>
+                <NavLink to="/myVehicles" className="nav-link">
+                  My Vehicles
+                </NavLink>
+                <NavLink to="/myBookings" className="nav-link">
+                  My Bookings
+                </NavLink>
+              </>
+            )}
             <Btn />
 
             {user ? (
@@ -85,7 +88,10 @@ const Navbar = ()=> {
                     />
                   </div>
                 )}
-                <button onClick={()=> dispatch(logout())} className=" cursor-pointer py-3 px-4 bg-gradient-to-r from-emerald-500 to-sky-500 text-white font-semibold rounded-lg">
+                <button
+                  onClick={() => dispatch(logout())}
+                  className=" cursor-pointer py-3 px-4 bg-gradient-to-r from-emerald-500 to-sky-500 text-white font-semibold rounded-lg"
+                >
                   Log Out
                 </button>
               </div>
@@ -122,5 +128,5 @@ const Navbar = ()=> {
       <NavMobile showMenu={showMenu} setShowMenu={setShowMenu} />
     </>
   );
-}
-export default Navbar
+};
+export default Navbar;

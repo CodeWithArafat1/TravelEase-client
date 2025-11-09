@@ -1,42 +1,46 @@
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash, FaEnvelope, FaLock } from "react-icons/fa";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import BtnLoader from "../components/shared/loader/BtnLoader";
-import { auth } from "../firebase/firebase.config";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-
-const provider = new GoogleAuthProvider();
+import { useDispatch } from "react-redux";
+import { googleLogin, signInEmail } from "../redux/auth/authSlice";
+import toast from "react-hot-toast";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError("");
+    setLoading(true);
+    const email = e.target.email.value;
+    const password = e.target.password.value;
 
-    // Simulate API call
-    setTimeout(() => {
-      if (email === "test@example.com" && password === "password") {
-        // Success
-        localStorage.setItem("isLoggedIn", "true");
-        navigate("/");
-      } else {
-        setError("Invalid email or password");
+    try {
+      const result = await dispatch(signInEmail({ email, password })).unwrap();
+      if (result) {
+        navigate(location.state || "/");
+        toast.success("Login successfully!");
       }
-      setLoading(false);
-    }, 1500);
+    } catch {
+      setError('Invalid email & password. Please try again.')
+    }finally{
+      setLoading(false)
+    }
   };
 
   const handleGoogleLogin = async () => {
-    const createUser = await signInWithPopup(auth, provider);
-    console.log(createUser.user);
+    const result = await dispatch(googleLogin());
+    if (result) {
+      navigate(location.state || "/");
+      toast.success("Login successfully!");
+    }
   };
 
   return (
@@ -61,8 +65,7 @@ const Login = () => {
                     </div>
                     <input
                       type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      name="email"
                       className="w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg  focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
                       placeholder="Enter your email"
                       required
@@ -70,7 +73,7 @@ const Login = () => {
                   </div>
                 </div>
 
-                {/* Password Input */}
+               
                 <div className="space-y-2">
                   <label className="text-sm font-medium ">Password</label>
                   <div className="relative">
@@ -79,8 +82,7 @@ const Login = () => {
                     </div>
                     <input
                       type={showPassword ? "text" : "password"}
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      name="password"
                       className="w-full pl-10 pr-10 py-3 border border-gray-300 dark:border-gray-600 rounded-lg  focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
                       placeholder="Enter your password"
                       required
@@ -108,7 +110,6 @@ const Login = () => {
                   </div>
                 )}
 
-                {/* Remember Me & Forgot Password */}
                 <div className="flex items-center justify-between">
                   <label className="flex items-center">
                     <input
@@ -125,7 +126,6 @@ const Login = () => {
                   </a>
                 </div>
 
-                {/* Sign In Button */}
                 <button
                   type="submit"
                   disabled={loading}
@@ -134,8 +134,6 @@ const Login = () => {
                   {loading ? <BtnLoader text="Sign ing..." /> : "Sign in"}
                 </button>
               </form>
-
-              {/* Divider */}
 
               <div className="relative flex justify-center text-sm divider">
                 <span className="px-4 ">Or</span>
@@ -149,7 +147,6 @@ const Login = () => {
                 <span className="font-medium">Login with Google</span>
               </button>
 
-              {/* Sign Up Link */}
               <p className="text-center text-sm text-gray-600 dark:text-gray-300 mt-6">
                 Don't have an account?{" "}
                 <Link

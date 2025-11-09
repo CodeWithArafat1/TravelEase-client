@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
+import useAxios from "../hooks/useAxios";
 
 const AllVehicles = () => {
+  const [vehicles, setVehicles] = useState([]);
+  const axiosInstance = useAxios();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const {data} = await axiosInstance.get("/vehicles");
+      setVehicles(data)
+      console.log(data)
+    };
+    fetchData()
+  }, [axiosInstance]);
   return (
     <section className="w-full p-4 md:p-8 bg-base-100">
       <div className="container mx-auto">
@@ -48,14 +60,10 @@ const AllVehicles = () => {
 
         {/* === Vehicle Grid === */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {
+            vehicles.map(vehicle => <ProductCard key={vehicle._id} vehicle={vehicle}/>)
+          }
+          
         </div>
 
         {/* === Pagination (Optional) === */}
