@@ -3,6 +3,10 @@ import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash, FaEnvelope, FaLock } from "react-icons/fa";
 import { Link, useNavigate } from "react-router";
 import BtnLoader from "../components/shared/loader/BtnLoader";
+import { auth } from "../firebase/firebase.config";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+
+const provider = new GoogleAuthProvider();
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -30,14 +34,9 @@ const Login = () => {
     }, 1500);
   };
 
-  const handleGoogleLogin = () => {
-    // Handle Google login
-    console.log("Google login clicked");
-    // In a real app, you would integrate Firebase Google Auth here
-    setTimeout(() => {
-      localStorage.setItem("isLoggedIn", "true");
-      navigate("/");
-    }, 1000);
+  const handleGoogleLogin = async () => {
+    const createUser = await signInWithPopup(auth, provider);
+    console.log(createUser.user);
   };
 
   return (
@@ -116,9 +115,7 @@ const Login = () => {
                       type="checkbox"
                       className="w-4 h-4 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500"
                     />
-                    <span className="ml-2 text-sm ">
-                      Remember me
-                    </span>
+                    <span className="ml-2 text-sm ">Remember me</span>
                   </label>
                   <a
                     href="#"
@@ -144,15 +141,12 @@ const Login = () => {
                 <span className="px-4 ">Or</span>
               </div>
 
-              {/* Google Login Button */}
               <button
                 onClick={handleGoogleLogin}
                 className="w-full cursor-pointer py-3 px-4 border border-gray-300 dark:border-gray-600 rounded-lg backdrop-blur-sm transition-all duration-200 flex items-center justify-center gap-3"
               >
                 <FcGoogle className="w-5 h-5" />
-                <span className="font-medium">
-                  Login with Google
-                </span>
+                <span className="font-medium">Login with Google</span>
               </button>
 
               {/* Sign Up Link */}

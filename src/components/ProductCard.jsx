@@ -62,16 +62,13 @@ const ProductCard = ({ vehicle }) => {
           </div>
         </div>
 
-        <div className="card-actions justify-between items-center mt-5">
+        <div className="card-actions justify-end items-center mt-5">
           <Link
             to={`/viewDetails/${id}`}
-            className="btn btn-outline btn-sm border-base-300 hover:bg-base-200 hover:border-base-400 transition-all"
+            className="btn btn-md border-base-300  transition-all"
           >
             View Details
           </Link>
-          <button className="btn btn-sm bg-primary hover:bg-primary-focus text-white border-none transition-all">
-            Book Now
-          </button>
         </div>
       </div>
     </div>

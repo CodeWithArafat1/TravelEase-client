@@ -3,13 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateModalClose } from "../redux/features/updateModalSlice";
 
 const UpdateVehicleModal = () => {
-  const {isOpen} = useSelector(store => store.updateModal)
-  const dispatch = useDispatch()
+  const { isOpen } = useSelector((store) => store.updateModal);
+  const dispatch = useDispatch();
   const handelUpdateVehicle = () => {};
   return (
     <>
-      <div className={`fixed ${isOpen ? 'block': 'hidden'} inset-0 bg-black/40 z-99`}>
-        <div className="max-w-2xl relative my-20 mx-auto p-6 bg-base-100 rounded-lg shadow-sm border border-gray-300/20">
+      <div
+        className={`fixed px-2 ${
+          isOpen ? "block" : "hidden"
+        } inset-0 bg-black/40 z-99`}
+        onClick={() => dispatch(updateModalClose())}
+      >
+        <div onClick={(e)=> e.stopPropagation()} className="max-w-2xl relative my-20 mx-auto p-6 bg-base-100 rounded-lg shadow-sm border border-gray-300/20">
           <h2 className="text-2xl font-bold mb-6">Update Vehicle</h2>
 
           <form className="space-y-4" onSubmit={handelUpdateVehicle}>
@@ -146,7 +151,12 @@ const UpdateVehicleModal = () => {
             </div>
           </form>
 
-          <button className="btn absolute top-0 right-0" onClick={()=>dispatch(updateModalClose())}>X</button>
+          <button
+            className="btn absolute top-0 right-0"
+            onClick={() => dispatch(updateModalClose())}
+          >
+            X
+          </button>
         </div>
       </div>
     </>

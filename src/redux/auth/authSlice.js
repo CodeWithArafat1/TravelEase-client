@@ -1,8 +1,22 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase/firebase.config";
+
+export const logout = createAsyncThunk(
+  "userAuth/logout",
+  async (_, thankAPI) => {
+    try {
+      await signOut(auth);
+      return true
+    } catch (err) {
+      return thankAPI.rejectWithValue(err.message);
+    }
+  }
+);
 
 const initialState = {
   user: null,
-  loading: false,
+  userLoading: true,
   error: null,
 };
 
@@ -14,17 +28,27 @@ const userAuthSlice = createSlice({
       state.user = action.payload;
     },
     setLoading: (state, action) => {
-      state.loading = action.payload;
+      state.userLoading = action.payload;
     },
     setError: (state, action) => {
       state.error = action.payload;
     },
-    logout: (state) => {
-      state.user = null;
-      state.error = null;
-    },
+  },
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(logout.pending, (state) => {
+        state.userLoading = true;
+      })
+      .addCase(logout.fulfilled, (state) => {
+        (state.user = null), (state.error = null), (state.userLoading = null);
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.userLoading = null;
+        state.error = action.payload;
+      });
   },
 });
 
-export const { setUser, setLoading, setError, logout } = userAuthSlice.actions;
+export const { setUser, setLoading, setError } = userAuthSlice.actions;
 export default userAuthSlice.reducer;
