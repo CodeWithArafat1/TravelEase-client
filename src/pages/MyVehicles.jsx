@@ -1,8 +1,11 @@
 import React from "react";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
+import UpdateVehicleModal from "../components/UpdateVehicleModal";
+import { updateModalOpen } from "../redux/features/updateModalSlice";
+import { useDispatch } from "react-redux";
 
 const MyVehicles = () => {
-  // Static data for demonstration
+  const dispatch = useDispatch()
   const vehicles = [
     {
       id: 1,
@@ -121,7 +124,7 @@ const MyVehicles = () => {
                     <button className="btn btn-xs btn-outline btn-info">
                       <FaEye className="h-3 w-3 sm:h-4 sm:w-4" />
                     </button>
-                    <button className="btn btn-xs btn-outline btn-warning">
+                    <button className="btn btn-xs btn-outline btn-warning" onClick={()=>dispatch(updateModalOpen())}>
                       <FaEdit className="h-3 w-3 sm:h-4 sm:w-4" />
                     </button>
                     <button className="btn btn-xs btn-outline btn-error">
@@ -134,6 +137,8 @@ const MyVehicles = () => {
           </tbody>
         </table>
       </div>
+
+      <UpdateVehicleModal/>
     </div>
   );
 };

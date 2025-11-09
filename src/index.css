@@ -2,7 +2,11 @@
 @plugin "daisyui";
 
 @plugin "daisyui" {
-  themes: light --prefersdark , dark --default;
+  themes: light --prefersdark, dark --default;
 }
 
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark *])) ;
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark *]));
+
+.nav-links a.active {
+  @apply text-emerald-400;
+}

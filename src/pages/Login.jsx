@@ -43,34 +43,28 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center ">
       <div className="relative z-10 w-full max-w-md px-4">
-        <div className="bg-white/70 dark:bg-slate-800/70 backdrop-blur-xl rounded-2xl shadow-sm border border-gray-300/20 dark:border-slate-700/50 overflow-hidden ">
+        <div className=" dark:bg-slate-800/70 backdrop-blur-xl rounded-2xl shadow-sm border border-gray-300/50 dark:border-slate-700/50 overflow-hidden ">
           <div className="relative">
             <div className="p-8">
               <div className="text-center mb-8">
-                <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
-                  Welcome Back
-                </h1>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
-                  Sign in to your TravelEase account
-                </p>
+                <h1 className="text-2xl font-bold   mb-2">Welcome Back</h1>
+                <p className="text-sm ">Sign in to your TravelEase account</p>
               </div>
 
               {/* Login Form */}
               <form onSubmit={handleLogin} className="space-y-6">
                 {/* Email Input */}
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    Email Address
-                  </label>
+                  <label className="text-sm font-medium ">Email Address</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <FaEnvelope className="h-5 w-5 text-gray-400" />
+                      <FaEnvelope className="h-5 w-5 " />
                     </div>
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white/50 dark:bg-slate-700/50  focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                      className="w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg  focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
                       placeholder="Enter your email"
                       required
                     />
@@ -79,18 +73,16 @@ const Login = () => {
 
                 {/* Password Input */}
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    Password
-                  </label>
+                  <label className="text-sm font-medium ">Password</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <FaLock className="h-5 w-5 text-gray-400" />
+                      <FaLock className="h-5 w-5 " />
                     </div>
                     <input
                       type={showPassword ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full pl-10 pr-10 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white/50 dark:bg-slate-700/50  focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                      className="w-full pl-10 pr-10 py-3 border border-gray-300 dark:border-gray-600 rounded-lg  focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
                       placeholder="Enter your password"
                       required
                     />
@@ -100,9 +92,9 @@ const Login = () => {
                       className="absolute inset-y-0 right-0 pr-3 flex items-center"
                     >
                       {showPassword ? (
-                        <FaEyeSlash className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                        <FaEyeSlash className="h-5 w-5 " />
                       ) : (
-                        <FaEye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                        <FaEye className="h-5 w-5" />
                       )}
                     </button>
                   </div>
@@ -124,7 +116,7 @@ const Login = () => {
                       type="checkbox"
                       className="w-4 h-4 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500"
                     />
-                    <span className="ml-2 text-sm text-gray-600 dark:text-gray-300">
+                    <span className="ml-2 text-sm ">
                       Remember me
                     </span>
                   </label>
@@ -147,24 +139,18 @@ const Login = () => {
               </form>
 
               {/* Divider */}
-              <div className="relative my-6">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-4 bg-white/70 dark:bg-slate-800/70 text-gray-500">
-                    Or continue with
-                  </span>
-                </div>
+
+              <div className="relative flex justify-center text-sm divider">
+                <span className="px-4 ">Or</span>
               </div>
 
               {/* Google Login Button */}
               <button
                 onClick={handleGoogleLogin}
-                className="w-full cursor-pointer py-3 px-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white/50 dark:bg-slate-700/50 backdrop-blur-sm hover:bg-white/70 dark:hover:bg-slate-700/70 transition-all duration-200 flex items-center justify-center gap-3"
+                className="w-full cursor-pointer py-3 px-4 border border-gray-300 dark:border-gray-600 rounded-lg backdrop-blur-sm transition-all duration-200 flex items-center justify-center gap-3"
               >
                 <FcGoogle className="w-5 h-5" />
-                <span className="text-gray-700 dark:text-gray-300 font-medium">
+                <span className="font-medium">
                   Login with Google
                 </span>
               </button>
