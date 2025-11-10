@@ -1,25 +1,40 @@
 import { useSelector } from "react-redux";
 import useAxios from "../hooks/useAxios";
 import toast from "react-hot-toast";
+import { GrAlert } from "react-icons/gr";
 
 const AddVehicle = () => {
   const { user } = useSelector((store) => store.userAuth);
-  const axiosInstance = useAxios()
+  const axiosInstance = useAxios();
   const handelAddVehicle = async (e) => {
     e.preventDefault();
-    const form = e.target;
+    const form = e.target
     const formData = new FormData(form);
-    const vehicleData = Object.fromEntries(formData.entries());
+    const vehicleData = Object.fromEntries(formData.entries())
     vehicleData.displayName = user?.displayName;
     vehicleData.photoURL = user?.photoURL;
     vehicleData.email = user?.email;
-    vehicleData.createAt = new Date().toISOString()
+    vehicleData.createAt = new Date().toISOString();
+    if (vehicleData.pricePerDay < 5) {
+      return toast("Price muse be greater than 5", {
+        style: {
+          border: "1px solid #ff0000",
+          padding: "16px",
+          color: "#ff0000",
+        },
+        iconTheme: {
+          primary: "#ff0000",
+          secondary: "#FFFAEE",
+        },
+        icon: <GrAlert />,
+      });
+    }
     try {
       const { data } = await axiosInstance.post("/vehicles", vehicleData);
-      if(data.insertedId){
-        toast.success('Your vehicles added!')
+      if (data.insertedId) {
+        form.reset();
+        toast.success("Your vehicles added!");
       }
-      console.log(data)
     } catch (err) {
       toast.error(err.message);
     }
@@ -38,8 +53,8 @@ const AddVehicle = () => {
               required
               type="text"
               id="vehicleName"
+              placeholder="vehicle Name"
               name="vehicleName"
-              defaultValue="Toyota Corolla"
               className="input input-bordered w-full focus:outline-none focus:ring-0"
             />
           </div>
@@ -68,7 +83,6 @@ const AddVehicle = () => {
             <select
               id="category"
               name="category"
-              defaultValue="Sedan"
               className="select select-bordered w-full focus:outline-none focus:ring-0"
             >
               <option value="Sedan">Sedan</option>
@@ -87,6 +101,7 @@ const AddVehicle = () => {
               type="number"
               id="pricePerDay"
               name="pricePerDay"
+              placeholder="price PerDay"
               min="0"
               className="input input-bordered w-full focus:outline-none focus:ring-0"
             />
@@ -102,8 +117,8 @@ const AddVehicle = () => {
               required
               type="text"
               id="location"
+              placeholder="Location"
               name="location"
-              defaultValue="Dhaka, Bangladesh"
               className="input input-bordered w-full focus:outline-none focus:ring-0"
             />
           </div>
@@ -115,7 +130,6 @@ const AddVehicle = () => {
             <select
               id="availability"
               name="availability"
-              defaultValue="Available"
               className="select select-bordered w-full focus:outline-none focus:ring-0"
             >
               <option value="Available">Available</option>
@@ -132,7 +146,7 @@ const AddVehicle = () => {
             required
             id="description"
             name="description"
-            defaultValue="Comfortable 5-seater with A/C and GPS."
+            placeholder="description"
             className="textarea textarea-bordered w-full focus:outline-none focus:ring-0"
             rows="3"
           ></textarea>
@@ -147,7 +161,6 @@ const AddVehicle = () => {
             type="url"
             id="coverImage"
             name="coverImage"
-            defaultValue="https://i.ibb.co/example/image.jpg"
             placeholder="https://example.com/image.jpg"
             className="input input-bordered w-full focus:outline-none focus:ring-0"
           />
@@ -155,14 +168,14 @@ const AddVehicle = () => {
 
         <div className="flex justify-end space-x-3 pt-4">
           <button
-            type="button"
+            type="reset"
             className="btn btn-outline focus:outline-none focus:ring-0"
           >
             Reset
           </button>
           <button
             type="submit"
-            className="cursor-pointer btn bg-gradient-to-r from-emerald-500 to-sky-500 text-white font-semibold rounded-lg"
+            className="cursor-pointer btn bg-linear-to-r from-emerald-500 to-sky-500 text-white font-semibold rounded-lg"
           >
             Add Vehicle
           </button>

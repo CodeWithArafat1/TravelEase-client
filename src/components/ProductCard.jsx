@@ -64,7 +64,7 @@ const ProductCard = ({ vehicle }) => {
           </div>
         </div>
 
-        <div className="card-actions justify-end items-center mt-5">
+        <div className="card-actions justify-end items-center ">
           <Link
             to={`/viewDetails/${_id}`}
             className="btn btn-md border-base-300  transition-all"

@@ -1,11 +1,60 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateModalClose } from "../redux/features/updateModalSlice";
+import { IoCloseSharp } from "react-icons/io5";
+import toast from "react-hot-toast";
+import useAxios from "../hooks/useAxios";
+import { GrAlert } from "react-icons/gr";
 
-const UpdateVehicleModal = () => {
+const UpdateVehicleModal = ({ setVehicles, selectProd }) => {
   const { isOpen } = useSelector((store) => store.updateModal);
   const dispatch = useDispatch();
-  const handelUpdateVehicle = () => {};
+  const { user } = useSelector((store) => store.userAuth);
+  const axiosInstance = useAxios();
+
+  const handelUpdateVehicle = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const vehicleData = Object.fromEntries(formData.entries());
+    vehicleData.displayName = user?.displayName;
+    vehicleData.photoURL = user?.photoURL;
+    vehicleData.email = user?.email;
+
+    if (vehicleData.pricePerDay < 5) {
+      return toast("Price muse be greater than 5", {
+        style: {
+          border: "1px solid #ff0000",
+          padding: "16px",
+          color: "#ff0000",
+        },
+        iconTheme: {
+          primary: "#ff0000",
+          secondary: "#FFFAEE",
+        },
+        icon: <GrAlert />,
+      });
+    }
+    try {
+      const { data } = await axiosInstance.patch(
+        `/vehicles/${selectProd._id}`,
+        vehicleData
+      );
+      if (data.modifiedCount) {
+        dispatch(updateModalClose());
+        setVehicles((prev) => {
+          return prev.map((item) =>
+            item._id === selectProd._id ? { ...item, ...vehicleData } : item
+          );
+        });
+        toast.success("Your vehicles updated!");
+      } else {
+        toast.error("Place update something!");
+      }
+    } catch (err) {
+      toast.error(err.message);
+    }
+  };
   return (
     <>
       <div
@@ -14,7 +63,10 @@ const UpdateVehicleModal = () => {
         } inset-0 bg-black/40 z-99`}
         onClick={() => dispatch(updateModalClose())}
       >
-        <div onClick={(e)=> e.stopPropagation()} className="max-w-2xl relative my-20 mx-auto p-6 bg-base-100 rounded-lg shadow-sm border border-gray-300/20">
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="max-w-2xl relative my-20 mx-auto p-6 bg-base-100 rounded-lg shadow-sm border border-gray-300/20"
+        >
           <h2 className="text-2xl font-bold mb-6">Update Vehicle</h2>
 
           <form className="space-y-4" onSubmit={handelUpdateVehicle}>
@@ -28,7 +80,7 @@ const UpdateVehicleModal = () => {
                   type="text"
                   id="vehicleName"
                   name="vehicleName"
-                  defaultValue="Toyota Corolla"
+                  defaultValue={selectProd?.vehicleName}
                   className="input input-bordered w-full focus:outline-none focus:ring-0"
                 />
               </div>
@@ -41,8 +93,9 @@ const UpdateVehicleModal = () => {
                   required
                   type="text"
                   id="owner"
+                  readOnly
                   name="owner"
-                  defaultValue="John Doe"
+                  defaultValue={selectProd?.owner}
                   className="input input-bordered w-full focus:outline-none focus:ring-0"
                 />
               </div>
@@ -56,7 +109,7 @@ const UpdateVehicleModal = () => {
                 <select
                   id="category"
                   name="category"
-                  defaultValue="Sedan"
+                  defaultValue={selectProd?.category}
                   className="select select-bordered w-full focus:outline-none focus:ring-0"
                 >
                   <option value="Sedan">Sedan</option>
@@ -74,6 +127,7 @@ const UpdateVehicleModal = () => {
                   required
                   type="number"
                   id="pricePerDay"
+                  defaultValue={selectProd?.pricePerDay}
                   name="pricePerDay"
                   min="0"
                   className="input input-bordered w-full focus:outline-none focus:ring-0"
@@ -91,7 +145,7 @@ const UpdateVehicleModal = () => {
                   type="text"
                   id="location"
                   name="location"
-                  defaultValue="Dhaka, Bangladesh"
+                  defaultValue={selectProd?.location}
                   className="input input-bordered w-full focus:outline-none focus:ring-0"
                 />
               </div>
@@ -103,7 +157,7 @@ const UpdateVehicleModal = () => {
                 <select
                   id="availability"
                   name="availability"
-                  defaultValue="Available"
+                  defaultValue={selectProd?.availability}
                   className="select select-bordered w-full focus:outline-none focus:ring-0"
                 >
                   <option value="Available">Available</option>
@@ -120,7 +174,7 @@ const UpdateVehicleModal = () => {
                 required
                 id="description"
                 name="description"
-                defaultValue="Comfortable 5-seater with A/C and GPS."
+                defaultValue={selectProd?.description}
                 className="textarea textarea-bordered w-full focus:outline-none focus:ring-0"
                 rows="3"
               ></textarea>
@@ -135,7 +189,7 @@ const UpdateVehicleModal = () => {
                 type="url"
                 id="coverImage"
                 name="coverImage"
-                defaultValue="https://i.ibb.co/example/image.jpg"
+                defaultValue={selectProd?.coverImage}
                 placeholder="https://example.com/image.jpg"
                 className="input input-bordered w-full focus:outline-none focus:ring-0"
               />
@@ -152,10 +206,10 @@ const UpdateVehicleModal = () => {
           </form>
 
           <button
-            className="btn absolute top-0 right-0"
+            className="absolute top-2 cursor-pointer right-2"
             onClick={() => dispatch(updateModalClose())}
           >
-            X
+            <IoCloseSharp size={25} />
           </button>
         </div>
       </div>

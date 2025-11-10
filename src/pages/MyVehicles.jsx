@@ -8,17 +8,17 @@ import toast from "react-hot-toast";
 import FullLoader from "../components/shared/loader/FullLoader";
 import { Link } from "react-router";
 import ConfirmModal from "../components/ConfirmModal";
+import { openConfirmModal } from "../redux/features/ConfirmModalSlice";
 
 const MyVehicles = () => {
   const { user } = useSelector((store) => store.userAuth);
-  const [selectProd, setSelectProd] = useState(null)
+  const [selectProd, setSelectProd] = useState(null);
   const [vehicles, setVehicles] = useState([]);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const axiosInstance = useAxios();
 
   useEffect(() => {
-    setLoading(true);
     const fetchData = async () => {
       try {
         const { data } = await axiosInstance.get(
@@ -27,14 +27,11 @@ const MyVehicles = () => {
         setVehicles(data);
       } catch (err) {
         toast.error(err.message);
-      } finally {
-        setLoading(false);
       }
     };
     fetchData();
   }, [axiosInstance, user]);
 
-  
   const fetchData = async (id) => {
     setLoading(true);
     try {
@@ -45,7 +42,7 @@ const MyVehicles = () => {
       }
     } catch (err) {
       toast.error(err.message);
-    }finally{
+    } finally {
       setLoading(false);
     }
   };
@@ -61,7 +58,7 @@ const MyVehicles = () => {
       </div>
 
       <div className="overflow-x-auto bg-base-100 rounded-lg shadow-sm">
-        {vehicles.length === 0 ? (
+        {vehicles?.length === 0 ? (
           <div className="h-[60vh] flex justify-center items-center">
             <div className="text-center space-y-10">
               <h1 className="text-3xl text-accent">No Vehicles </h1>
@@ -88,7 +85,7 @@ const MyVehicles = () => {
               </tr>
             </thead>
             <tbody>
-              {vehicles.map((vehicle) => (
+              {vehicles?.map((vehicle) => (
                 <tr key={vehicle._id}>
                   <td>
                     <div className="flex items-center space-x-2 sm:space-x-3">
@@ -128,19 +125,26 @@ const MyVehicles = () => {
                   </td>
                   <td>
                     <div className="flex gap-1 sm:gap-2">
-                      <button className="btn btn-xs btn-outline btn-info">
+                      <Link
+                        to={`/viewDetails/${vehicle._id}`}
+                        className="btn btn-xs btn-outline btn-info"
+                      >
                         <FaEye className="h-3 w-3 sm:h-4 sm:w-4" />
-                      </button>
+                      </Link>
                       <button
                         className="btn btn-xs btn-outline btn-warning"
                         onClick={() => {
                           dispatch(updateModalOpen());
+                          setSelectProd(vehicle);
                         }}
                       >
                         <FaEdit className="h-3 w-3 sm:h-4 sm:w-4" />
                       </button>
                       <button
-                        onClick={() => setSelectProd(vehicle._id)}
+                        onClick={() => {
+                          setSelectProd(vehicle._id);
+                          dispatch(openConfirmModal());
+                        }}
                         className="btn btn-xs btn-outline btn-error"
                       >
                         <FaTrash className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -154,8 +158,12 @@ const MyVehicles = () => {
         )}
       </div>
 
-      <UpdateVehicleModal />
-      <ConfirmModal fetchData={fetchData} selectProd={selectProd}/>
+      <UpdateVehicleModal
+        vehicles={vehicles}
+        setVehicles={setVehicles}
+        selectProd={selectProd}
+      />
+      <ConfirmModal fetchData={fetchData} selectProd={selectProd} />
     </div>
   );
 };

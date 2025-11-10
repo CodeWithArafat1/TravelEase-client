@@ -1,13 +1,21 @@
 import React from "react";
 import { IoClose } from "react-icons/io5";
 import { GrAlert } from "react-icons/gr";
+import { useDispatch, useSelector } from "react-redux";
+import { closeConfirmModal } from "../redux/features/ConfirmModalSlice";
 const ConfirmModal = ({ selectProd, fetchData }) => {
+  const dispatch = useDispatch();
+  const { isOpen } = useSelector((store) => store.confirmModal);
   return (
-    <div className="fixed hidden inset-0 z-50 flex items-center justify-center">
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+    <div
+      className={`fixed ${
+        isOpen ? "flex" : "hidden"
+      }  inset-0 z-50  items-center justify-center`}
+    >
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={()=> dispatch(closeConfirmModal())}></div>
 
       <div className="relative bg-white rounded-xl shadow-2xl max-w-md w-full mx-4">
-        <button className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors p-1">
+        <button onClick={()=> dispatch(closeConfirmModal())} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors p-1">
           <IoClose size={24} />
         </button>
 
@@ -28,11 +36,14 @@ const ConfirmModal = ({ selectProd, fetchData }) => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <button className="w-full sm:w-auto px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors">
+            <button onClick={()=> dispatch(closeConfirmModal())} className="w-full sm:w-auto px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors">
               Cancel
             </button>
             <button
-              onClick={() => fetchData(selectProd)}
+              onClick={() => {
+                fetchData(selectProd);
+                dispatch(closeConfirmModal())
+              }}
               className="w-full sm:w-auto cursor-pointer py-3 px-6 bg-linear-to-r from-emerald-500 to-sky-500 text-white font-semibold rounded-lg hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
             >
               Confirm

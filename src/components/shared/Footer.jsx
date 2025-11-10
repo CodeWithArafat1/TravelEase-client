@@ -1,15 +1,23 @@
 import React from "react";
 import { BsTwitterX } from "react-icons/bs";
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaEnvelope, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
+import {
+  FaFacebookF,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedinIn,
+  FaEnvelope,
+  FaPhone,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
+import { Link } from "react-router";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-white/40 dark:bg-slate-800/40 backdrop-blur">
-      <div className="max-w-7xl mx-auto px-4 py-8">
+    <footer className=" backdrop-blur">
+      <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* About Section */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full  flex items-center justify-center font-bold border">
@@ -23,7 +31,8 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-sm dark:text-slate-300">
-              Your trusted partner for vehicle rentals and trip management. Making every journey memorable.
+              Your trusted partner for vehicle rentals and trip management.
+              Making every journey memorable.
             </p>
           </div>
 
@@ -32,27 +41,42 @@ const Footer = () => {
             <h3 className="font-bold text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="/" className="hover:text-emerald-500 transition-colors">
+                <a
+                  href="/"
+                  className="hover:text-emerald-500 transition-colors"
+                >
                   Home
                 </a>
               </li>
               <li>
-                <a href="/allVehicles" className="hover:text-emerald-500 transition-colors">
+                <a
+                  href="/allVehicles"
+                  className="hover:text-emerald-500 transition-colors"
+                >
                   All Vehicles
                 </a>
               </li>
               <li>
-                <a href="/addVehicles" className="hover:text-emerald-500 transition-colors">
+                <a
+                  href="/addVehicles"
+                  className="hover:text-emerald-500 transition-colors"
+                >
                   Add Vehicle
                 </a>
               </li>
               <li>
-                <a href="/myVehicles" className="hover:text-emerald-500 transition-colors">
+                <a
+                  href="/myVehicles"
+                  className="hover:text-emerald-500 transition-colors"
+                >
                   My Vehicles
                 </a>
               </li>
               <li>
-                <a href="/myBookings" className="hover:text-emerald-500 transition-colors">
+                <a
+                  href="/myBookings"
+                  className="hover:text-emerald-500 transition-colors"
+                >
                   My Bookings
                 </a>
               </li>
@@ -62,7 +86,7 @@ const Footer = () => {
           {/* Contact & Social */}
           <div>
             <h3 className="font-bold text-lg mb-4">Connect With Us</h3>
-            
+
             {/* Contact Info */}
             <div className="space-y-2 mb-4 text-sm">
               <div className="flex items-center gap-2">
@@ -79,40 +103,39 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* Social Links */}
             <div className="flex gap-3">
-              <a 
-                href="https://facebook.com" 
-                target="_blank" 
+              <Link
+                href="https://facebook.com"
+                target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-sky-500 flex items-center justify-center text-white hover:scale-110 transition-transform"
+                className="w-10 h-10 rounded-full bg-linear-to-br from-emerald-400 to-sky-500 flex items-center justify-center text-white hover:scale-110 transition-transform"
                 aria-label="Facebook"
               >
                 <FaFacebookF className="text-sm" />
-              </a>
-              <a 
-                href="https://twitter.com" 
-                target="_blank" 
+              </Link>
+              <a
+                href="https://twitter.com"
+                target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-sky-500 flex items-center justify-center text-white hover:scale-110 transition-transform"
+                className="w-10 h-10 rounded-full bg-linear-to-br from-emerald-400 to-sky-500 flex items-center justify-center text-white hover:scale-110 transition-transform"
                 aria-label="Twitter"
               >
-                <BsTwitterX className="text-sm"/>
+                <BsTwitterX className="text-sm" />
               </a>
-              <a 
-                href="https://instagram.com" 
-                target="_blank" 
+              <a
+                href="https://instagram.com"
+                target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-sky-500 flex items-center justify-center text-white hover:scale-110 transition-transform"
+                className="w-10 h-10 rounded-full bg-linear-to-br from-emerald-400 to-sky-500 flex items-center justify-center text-white hover:scale-110 transition-transform"
                 aria-label="Instagram"
               >
                 <FaInstagram className="text-sm" />
               </a>
-              <a 
-                href="https://linkedin.com" 
-                target="_blank" 
+              <a
+                href="https://linkedin.com"
+                target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-sky-500 flex items-center justify-center text-white hover:scale-110 transition-transform"
+                className="w-10 h-10 rounded-full bg-linear-to-br from-emerald-400 to-sky-500 flex items-center justify-center text-white hover:scale-110 transition-transform"
                 aria-label="LinkedIn"
               >
                 <FaLinkedinIn className="text-sm" />

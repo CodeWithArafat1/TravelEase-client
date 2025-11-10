@@ -8,7 +8,6 @@ const LatestVehicles = () => {
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await axiosInstance.get("/latestVehicles");
-      console.log(data);
       setLatest(data)
     };
     fetchData()
