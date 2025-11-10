@@ -11,9 +11,9 @@ import { TypeAnimation } from "react-type-animation";
 import { Link } from "react-router";
 
 const bannerImages = [
-  "https://plus.unsplash.com/premium_photo-1673002094029-7b23531aa342?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YmFubmVyJTIwaW1hZ2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=500",
-  "https://images.unsplash.com/photo-1597910037242-3539dde9a439?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmFubmVyJTIwaW1hZ2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=500",
-  "https://plus.unsplash.com/premium_photo-1673452726181-d914e3872652?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fHw%3D&auto=format&fit=crop&q=60&w=500",
+  "https://i.pinimg.com/1200x/4d/48/0c/4d480c6a0df8a37cbbfd8f0d84b62618.jpg",
+  "https://i.pinimg.com/736x/74/70/9f/74709f15b23210d0f6e171b6257ed2f2.jpg",
+  "https://i.pinimg.com/1200x/bb/07/d2/bb07d27fae444b16c8e9c66913a7ac7b.jpg",
 ];
 
 const travelTexts = [

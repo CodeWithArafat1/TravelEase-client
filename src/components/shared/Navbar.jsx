@@ -44,7 +44,7 @@ const Navbar = () => {
             </div>
             <div>
               <div className="font-extrabold text-lg">TravelEase</div>
-              <div className="line-clamp-1 text-xs text-gray-500 dark:text-slate-400">
+              <div className="line-clamp-1 text-xs">
                 Vehicle Booking & Trip Management
               </div>
             </div>
