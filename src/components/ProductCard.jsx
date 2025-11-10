@@ -25,7 +25,7 @@ const ProductCard = ({ vehicle }) => {
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
 
-        <div className="absolute top-3 left-3 bg-primary/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-semibold text-primary-content">
+        <div className="absolute top-3 left-3 bg-primary/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-semibold bg-linear-to-r from-emerald-500 to-sky-500 text-white">
           {category}
         </div>
       </figure>
@@ -56,7 +56,7 @@ const ProductCard = ({ vehicle }) => {
 
         <div className="mt-3">
           <div
-            className={`badge ${
+            className={`badge text-white ${
               availability === "Available" ? "badge-success" : "badge-error"
             } badge-sm`}
           >
@@ -67,7 +67,7 @@ const ProductCard = ({ vehicle }) => {
         <div className="card-actions justify-end items-center ">
           <Link
             to={`/viewDetails/${_id}`}
-            className="btn btn-md border-base-300  transition-all"
+            className="btn btn-md border-base-300  transition-all bg-linear-to-r from-emerald-500 to-sky-500 text-white"
           >
             View Details
           </Link>

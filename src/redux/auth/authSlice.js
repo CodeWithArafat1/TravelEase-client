@@ -8,6 +8,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../../firebase/firebase.config";
+import toast from "react-hot-toast";
 const googleProvider = new GoogleAuthProvider();
 
 // logout
@@ -16,6 +17,7 @@ export const logout = createAsyncThunk(
   async (_, thankAPI) => {
     try {
       await signOut(auth);
+      toast.success('Log out successfully!')
       return true;
     } catch (err) {
       return thankAPI.rejectWithValue(err.message);

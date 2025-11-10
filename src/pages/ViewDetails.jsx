@@ -16,14 +16,17 @@ import FullLoader from "../components/shared/loader/FullLoader";
 import BtnLoader from "../components/shared/loader/BtnLoader";
 import useAxios from "../hooks/useAxios";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 const ViewDetails = () => {
+  const { user } = useSelector((store) => store.userAuth);
   const { id } = useParams();
   const navigate = useNavigate();
   const [vehicle, setVehicle] = useState({});
   const [loading, setLoading] = useState(true);
   const [bookingLoading, setBookingLoading] = useState(false);
   const axiosInstance = useAxios();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -39,17 +42,35 @@ const ViewDetails = () => {
     fetchData();
   }, [id, axiosInstance]);
 
-  const createdAtDate = vehicle.createAt ? new Date(vehicle.createAt) : null;
-
+  // booking
   const handleBookNow = async () => {
     setBookingLoading(true);
-
-    setTimeout(() => {
-      setBookingLoading(false);
-
-      navigate("/myBookings");
-    }, 1500);
+    try {
+      const bookingInfo = {
+        email: user.email,
+        owner: vehicle.owner,
+        photoURL: vehicle.photoURL,
+        vehicleName: vehicle.vehicleName,
+        pricePerDay: vehicle.pricePerDay,
+        category: vehicle.category,
+        booking_date: new Date().toISOString(),
+        vehicleId : vehicle._id,
+        coverImage: vehicle.coverImage
+      };
+      const { data } = await axiosInstance.post("/myBooking", bookingInfo);
+      if (data.insertedId) {
+        setTimeout(() => {
+          toast.success("Booking successfully");
+          navigate("/myBookings");
+          setBookingLoading(false);
+        }, 1500);
+      }
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
+
+  const createdAtDate = vehicle.createAt ? new Date(vehicle.createAt) : null;
 
   if (loading) {
     return <FullLoader />;
@@ -80,7 +101,7 @@ const ViewDetails = () => {
           alt={vehicle.vehicleName}
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+        <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"></div>
 
         <button
           onClick={() => navigate(-1)}
@@ -113,9 +134,7 @@ const ViewDetails = () => {
 
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Quick Info Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               <div className="bg-base-100 rounded-lg p-4 text-center">
                 <FaDollarSign className="h-6 w-6 mx-auto mb-2 text-primary" />
@@ -153,9 +172,8 @@ const ViewDetails = () => {
             </div>
           </div>
 
-          {/* Sidebar */}
+      
           <div className="space-y-6">
-            {/* Owner Info */}
             <div className="bg-base-100 rounded-lg p-6">
               <h2 className="text-xl font-bold mb-4">Owner Information</h2>
               <div className="flex items-center gap-4 mb-4">
@@ -188,11 +206,13 @@ const ViewDetails = () => {
               </div>
 
               <button
-                onClick={handleBookNow}
-                disabled={
-                  vehicle.availability !== "Available" || bookingLoading
-                }
-                className="btn btn-primary w-full"
+                onClick={() => handleBookNow()}
+                disabled={vehicle.availability !== "Available"}
+                className={`btn w-full ${
+                  vehicle.availability === "Available"
+                    ? "bg-linear-to-r from-emerald-500 to-sky-500 text-white"
+                    : ""
+                } `}
               >
                 {bookingLoading ? (
                   <>

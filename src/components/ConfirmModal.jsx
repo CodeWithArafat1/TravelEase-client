@@ -3,7 +3,7 @@ import { IoClose } from "react-icons/io5";
 import { GrAlert } from "react-icons/gr";
 import { useDispatch, useSelector } from "react-redux";
 import { closeConfirmModal } from "../redux/features/ConfirmModalSlice";
-const ConfirmModal = ({ selectProd, fetchData }) => {
+const ConfirmModal = ({ selectProd, fetchData,message = 'Delete this Vehicle' }) => {
   const dispatch = useDispatch();
   const { isOpen } = useSelector((store) => store.confirmModal);
   return (
@@ -32,7 +32,7 @@ const ConfirmModal = ({ selectProd, fetchData }) => {
             <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">
               Are You Sure?
             </h2>
-            <p className="text-gray-600">Delete this Vehicle</p>
+            <p className="text-gray-600">{message}</p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center">

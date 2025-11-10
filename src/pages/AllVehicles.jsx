@@ -34,12 +34,10 @@ const AllVehicles = () => {
       if (locationSort === "all") return true;
       return vehicle.location === locationSort;
     })
-
     .filter((vehicle) => {
       if (categorySort === "all") return true;
       return vehicle.category === categorySort;
     })
-
     .sort((a, b) => {
       if (priceSort === "newest") return true;
       if (priceSort === "low-high") {
@@ -97,11 +95,15 @@ const AllVehicles = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {handelPriceSort.map((vehicle) => (
-            <ProductCard key={vehicle._id} vehicle={vehicle} />
-          ))}
-        </div>
+        {vehicles.length === 0 ? (
+          <div>not found</div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {handelPriceSort.map((vehicle) => (
+              <ProductCard key={vehicle._id} vehicle={vehicle} />
+            ))}
+          </div>
+        )}
 
         <div className="flex justify-center mt-12">
           <div className="join">

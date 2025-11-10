@@ -39,12 +39,12 @@ const Navbar = () => {
       <header className="w-full fixed shadow-sm bg-white/10   dark:bg-gray-800/40 top-0 backdrop-blur z-40">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-liner-to-br from-emerald-400 to-sky-500 flex items-center justify-center  font-bold border">
+            <div className="flex h-10 w-10  items-center justify-center rounded-full bg-linear-to-br from-emerald-400 to-sky-500 font-bold text-white border border-gray-300 dark:border-gray-700">
               TE
             </div>
             <div>
               <div className="font-extrabold text-lg">TravelEase</div>
-              <div className="text-xs  dark:text-slate-300 line-clamp-1">
+              <div className="line-clamp-1 text-xs text-gray-500 dark:text-slate-400">
                 Vehicle Booking & Trip Management
               </div>
             </div>
@@ -90,7 +90,7 @@ const Navbar = () => {
                 )}
                 <button
                   onClick={() => dispatch(logout())}
-                  className=" cursor-pointer py-3 px-4 bg-gradient-to-r from-emerald-500 to-sky-500 text-white font-semibold rounded-lg"
+                  className=" cursor-pointer py-3 px-4 bg-linear-to-r from-emerald-500 to-sky-500 text-white font-semibold rounded-lg"
                 >
                   Log Out
                 </button>
@@ -105,7 +105,7 @@ const Navbar = () => {
                 </Link>
                 <Link
                   to="auth/register"
-                  className="w-full cursor-pointer py-3 px-4 bg-gradient-to-r from-emerald-500 to-sky-500 text-white font-semibold rounded-lg"
+                  className="w-full cursor-pointer py-3 px-4 bg-linear-to-r from-emerald-500 to-sky-500 text-white font-semibold rounded-lg"
                 >
                   Register
                 </Link>
