@@ -14,7 +14,7 @@ const ProductCard = ({ vehicle }) => {
     vehicleName,
     _id,
   } = vehicle;
-    const createdAtDate = vehicle.createAt ? new Date(vehicle.createAt) : null;
+    const createdAtDate = createAt ? new Date(createAt) : null;
 
   return (
     <div className="card bg-base-100 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-base-300/30 group">
