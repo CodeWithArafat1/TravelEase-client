@@ -105,41 +105,33 @@ const Footer = () => {
 
             <div className="flex gap-3">
               <Link
-                href="https://facebook.com"
+                to="https://www.facebook.com/ArafatNill69"
                 target="_blank"
-                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-linear-to-br from-emerald-400 to-sky-500 flex items-center justify-center text-white hover:scale-110 transition-transform"
-                aria-label="Facebook"
               >
                 <FaFacebookF className="text-sm" />
               </Link>
-              <a
-                href="https://twitter.com"
+              <Link
+                to="https://x.com/ArafatNill37290"
                 target="_blank"
-                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-linear-to-br from-emerald-400 to-sky-500 flex items-center justify-center text-white hover:scale-110 transition-transform"
-                aria-label="Twitter"
               >
                 <BsTwitterX className="text-sm" />
-              </a>
-              <a
-                href="https://instagram.com"
+              </Link>
+              <Link
+                to="https://www.instagram.com/mr.rabbitai/"
                 target="_blank"
-                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-linear-to-br from-emerald-400 to-sky-500 flex items-center justify-center text-white hover:scale-110 transition-transform"
-                aria-label="Instagram"
               >
                 <FaInstagram className="text-sm" />
-              </a>
-              <a
-                href="https://linkedin.com"
+              </Link>
+              <Link
+                to="https://www.linkedin.com/in/md-arafat-ali-a66420367/"
                 target="_blank"
-                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-linear-to-br from-emerald-400 to-sky-500 flex items-center justify-center text-white hover:scale-110 transition-transform"
-                aria-label="LinkedIn"
               >
                 <FaLinkedinIn className="text-sm" />
-              </a>
+              </Link>
             </div>
           </div>
         </div>
