@@ -1,14 +1,17 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
+import React, { lazy } from "react";
 import App from "../App";
-import Home from "../pages/Home";
-import AllVehicles from "../pages/AllVehicles";
-import AddVehicle from "../pages/AddVehicle";
-import MyVehicles from "../pages/MyVehicles";
-import MyBookings from "../pages/MyBookings";
-import ViewDetails from "../pages/ViewDetails";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import NotFound from "../pages/NotFound";
+
+const Home = lazy(() => import("../pages/Home"));
+const AllVehicles = lazy(() => import("../pages/AllVehicles"));
+
+const AddVehicle = lazy(() => import("../pages/AddVehicle"));
+const MyVehicles = lazy(() => import("../pages/MyVehicles"));
+const MyBookings = lazy(() => import("../pages/MyBookings"));
+const ViewDetails = lazy(() => import("../pages/ViewDetails"));
+const Login = lazy(() => import("../pages/Login"));
+const Register = lazy(() => import("../pages/Register"));
+const NotFound = lazy(() => import("../pages/NotFound"));
 import PrivetRoutes from "../privetRoutes/PrivetRoutes";
 
 const router = createBrowserRouter([
