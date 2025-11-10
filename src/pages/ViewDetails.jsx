@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { useParams, useNavigate } from "react-router";
 import {
-  FaStar,
   FaMapMarkerAlt,
   FaCalendarAlt,
-  FaUser,
-  FaTag,
   FaDollarSign,
   FaCar,
-  FaCheckCircle,
   FaArrowLeft,
 } from "react-icons/fa";
 import { format } from "date-fns";
@@ -54,8 +50,8 @@ const ViewDetails = () => {
         pricePerDay: vehicle.pricePerDay,
         category: vehicle.category,
         booking_date: new Date().toISOString(),
-        vehicleId : vehicle._id,
-        coverImage: vehicle.coverImage
+        vehicleId: vehicle._id,
+        coverImage: vehicle.coverImage,
       };
       const { data } = await axiosInstance.post("/myBooking", bookingInfo);
       if (data.insertedId) {
@@ -172,7 +168,6 @@ const ViewDetails = () => {
             </div>
           </div>
 
-      
           <div className="space-y-6">
             <div className="bg-base-100 rounded-lg p-6">
               <h2 className="text-xl font-bold mb-4">Owner Information</h2>
@@ -238,4 +233,4 @@ const ViewDetails = () => {
   );
 };
 
-export default ViewDetails;
+export default memo(ViewDetails);

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import UserLoading from "./loader/UserLoading";
 import { IoClose } from "react-icons/io5";
 import { logout } from "../../redux/auth/authSlice";
+import { memo } from "react";
 
 const NavMobile = ({ setShowMenu, showMenu }) => {
   const dispatch = useDispatch();
@@ -155,4 +156,4 @@ const NavMobile = ({ setShowMenu, showMenu }) => {
     </div>
   );
 };
-export default NavMobile;
+export default memo(NavMobile);

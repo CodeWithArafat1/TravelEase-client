@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { useSelector } from "react-redux";
 import FullLoader from "../components/shared/loader/FullLoader";
 import { Navigate, useLocation } from "react-router";
@@ -16,4 +16,4 @@ const PrivetRoutes = ({ children }) => {
   return children;
 };
 
-export default PrivetRoutes;
+export default memo(PrivetRoutes);

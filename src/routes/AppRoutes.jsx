@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
-import React, { lazy } from "react";
+import React, { lazy, memo } from "react";
 import App from "../App";
 
 const Home = lazy(() => import("../pages/Home"));
@@ -79,4 +79,4 @@ const AppRoutes = () => {
   return <RouterProvider router={router} />;
 };
 
-export default AppRoutes;
+export default memo(AppRoutes);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import UpdateVehicleModal from "../components/UpdateVehicleModal";
 import { updateModalOpen } from "../redux/features/updateModalSlice";
@@ -168,4 +168,4 @@ const MyVehicles = () => {
   );
 };
 
-export default MyVehicles;
+export default memo(MyVehicles);

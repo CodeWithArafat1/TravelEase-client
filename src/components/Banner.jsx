@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { memo, useRef } from "react";
 import { FaStar, FaCar, FaLock } from "react-icons/fa";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
@@ -31,7 +31,7 @@ const travelTexts = [
   1500,
 ];
 
-export default function Banner() {
+const Banner = () => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
@@ -120,7 +120,10 @@ export default function Banner() {
                         >
                           All Vehicles
                         </Link>
-                        <Link to='/myVehicles' className="px-4 cursor-pointer sm:px-5 py-2 sm:py-3 rounded-lg border glass text-center">
+                        <Link
+                          to="/myVehicles"
+                          className="px-4 cursor-pointer sm:px-5 py-2 sm:py-3 rounded-lg border glass text-center"
+                        >
                           List Your Vehicle
                         </Link>
                       </div>
@@ -176,4 +179,6 @@ export default function Banner() {
       </section>
     </>
   );
-}
+};
+
+export default memo(Banner);

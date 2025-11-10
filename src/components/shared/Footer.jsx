@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { BsTwitterX } from "react-icons/bs";
 import {
   FaFacebookF,
@@ -83,11 +83,9 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact & Social */}
           <div>
             <h3 className="font-bold text-lg mb-4">Connect With Us</h3>
 
-            {/* Contact Info */}
             <div className="space-y-2 mb-4 text-sm">
               <div className="flex items-center gap-2">
                 <FaMapMarkerAlt className="text-emerald-500" />
@@ -136,7 +134,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Copyright */}
         <div className="border-t border-gray-200 dark:border-slate-700 mt-8 pt-6 text-center text-sm dark:text-slate-300">
           <p>© {currentYear} TravelEase. All rights reserved.</p>
         </div>
@@ -145,4 +142,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default memo(Footer);

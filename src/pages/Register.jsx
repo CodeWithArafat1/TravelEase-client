@@ -2,7 +2,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash, FaEnvelope, FaLock, FaUser } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router";
 import BtnLoader from "../components/shared/loader/BtnLoader";
-import { useState } from "react";
+import { memo, useState } from "react";
 
 import { BiPhotoAlbum } from "react-icons/bi";
 import { useDispatch } from "react-redux";
@@ -188,7 +188,7 @@ const Register = () => {
 
                 <button
                   type="submit"
-                  className="w-full cursor-pointer py-3 px-4 bg-gradient-to-r from-emerald-500 to-sky-500 text-white font-semibold rounded-lg transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full cursor-pointer py-3 px-4 bg-linear-to-r from-emerald-500 to-sky-500 text-white font-semibold rounded-lg transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Sign Up
                 </button>
@@ -223,4 +223,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default memo(Register);

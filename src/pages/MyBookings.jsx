@@ -1,7 +1,7 @@
 import { FaEye, FaTimesCircle, FaCheckCircle } from "react-icons/fa";
 import { FaCarBurst } from "react-icons/fa6";
 import { format } from "date-fns";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import useAxios from "../hooks/useAxios";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
@@ -166,4 +166,4 @@ const MyBookings = () => {
   );
 };
 
-export default MyBookings;
+export default memo(MyBookings);

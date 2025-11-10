@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { FaBars, FaMoon } from "react-icons/fa";
 import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { Link, NavLink } from "react-router";
@@ -90,7 +90,7 @@ const Navbar = () => {
                 )}
                 <button
                   onClick={() => dispatch(logout())}
-                  className=" cursor-pointer py-3 px-4 bg-linear-to-r from-emerald-500 to-sky-500 text-white font-semibold rounded-lg"
+                  className="cursor-pointer rounded-lg bg-linear-to-r from-red-500 to-pink-500 py-3 px-4 text-center font-semibold text-white transition-all duration-200 hover:opacity-90"
                 >
                   Log Out
                 </button>
@@ -129,4 +129,4 @@ const Navbar = () => {
     </>
   );
 };
-export default Navbar;
+export default memo(Navbar);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash, FaEnvelope, FaLock } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router";
@@ -29,9 +29,9 @@ const Login = () => {
         toast.success("Login successfully!");
       }
     } catch {
-      setError('Invalid email & password. Please try again.')
-    }finally{
-      setLoading(false)
+      setError("Invalid email & password. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -73,7 +73,6 @@ const Login = () => {
                   </div>
                 </div>
 
-               
                 <div className="space-y-2">
                   <label className="text-sm font-medium ">Password</label>
                   <div className="relative">
@@ -129,7 +128,7 @@ const Login = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full cursor-pointer py-3 px-4 bg-gradient-to-r from-emerald-500 to-sky-500 text-white font-semibold rounded-lg   transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full cursor-pointer py-3 px-4 bg-linear-to-r from-emerald-500 to-sky-500 text-white font-semibold rounded-lg   transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? <BtnLoader text="Sign ing..." /> : "Sign in"}
                 </button>
@@ -164,4 +163,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default memo(Login);

@@ -3,7 +3,7 @@ import Navbar from "./components/shared/Navbar";
 import Footer from "./components/shared/Footer";
 import { setLoading, setUser } from "./redux/auth/authSlice";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/firebase.config";
 
@@ -48,4 +48,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default memo(App);

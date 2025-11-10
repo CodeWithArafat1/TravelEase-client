@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { memo } from "react";
 import { FaMapMarkerAlt, FaCalendarAlt, FaHeart, FaStar } from "react-icons/fa";
 import { Link } from "react-router";
 
@@ -14,7 +15,7 @@ const ProductCard = ({ vehicle }) => {
     vehicleName,
     _id,
   } = vehicle;
-    const createdAtDate = createAt ? new Date(createAt) : null;
+  const createdAtDate = createAt ? new Date(createAt) : null;
 
   return (
     <div className="card bg-base-100 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-base-300/30 group">
@@ -77,4 +78,4 @@ const ProductCard = ({ vehicle }) => {
   );
 };
 
-export default ProductCard;
+export default memo(ProductCard);

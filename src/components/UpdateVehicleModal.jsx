@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateModalClose } from "../redux/features/updateModalSlice";
 import { IoCloseSharp } from "react-icons/io5";
@@ -198,7 +198,7 @@ const UpdateVehicleModal = ({ setVehicles, selectProd }) => {
             <div className="flex justify-end space-x-3 pt-4">
               <button
                 type="submit"
-                className="cursor-pointer btn bg-gradient-to-r from-emerald-500 to-sky-500 text-white font-semibold rounded-lg"
+                className="cursor-pointer btn bg-linear-to-r from-emerald-500 to-sky-500 text-white font-semibold rounded-lg"
               >
                 Update Vehicle
               </button>
@@ -217,4 +217,4 @@ const UpdateVehicleModal = ({ setVehicles, selectProd }) => {
   );
 };
 
-export default UpdateVehicleModal;
+export default memo(UpdateVehicleModal);

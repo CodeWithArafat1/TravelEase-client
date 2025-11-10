@@ -1,3 +1,4 @@
+import { memo } from "react";
 import CategoryCard from "../components/CategoryCard";
 import FeaturedOwnerCard from "../components/FeaturedOwnerCard";
 
@@ -38,4 +39,4 @@ const TopCategoriesSection = () => {
   );
 };
 
-export default TopCategoriesSection;
+export default memo(TopCategoriesSection);

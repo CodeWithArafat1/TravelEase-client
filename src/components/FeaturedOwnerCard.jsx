@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 const FeaturedOwnerCard = () => {
   return (
     <div className="card w-full bg-base-200 shadow-sm">
@@ -25,4 +27,4 @@ const FeaturedOwnerCard = () => {
   );
 };
 
-export default FeaturedOwnerCard;
+export default memo(FeaturedOwnerCard);

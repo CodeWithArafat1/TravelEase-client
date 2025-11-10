@@ -1,6 +1,6 @@
 import axios from "axios";
-import { useEffect } from "react";
-
+import { memo, useEffect } from "react";
+// === just created no use ===
 const instance = axios.create({
   baseURL: "http://localhost:3000/api",
 });
@@ -36,4 +36,4 @@ const useAxiosSecure = () => {
   return instance;
 };
 
-export default useAxiosSecure;
+export default memo(useAxiosSecure);

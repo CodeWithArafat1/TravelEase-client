@@ -2,19 +2,20 @@ import { useSelector } from "react-redux";
 import useAxios from "../hooks/useAxios";
 import toast from "react-hot-toast";
 import { GrAlert } from "react-icons/gr";
+import { memo } from "react";
 
 const AddVehicle = () => {
   const { user } = useSelector((store) => store.userAuth);
   const axiosInstance = useAxios();
   const handelAddVehicle = async (e) => {
     e.preventDefault();
-    const form = e.target
+    const form = e.target;
     const formData = new FormData(form);
-    const vehicleData = Object.fromEntries(formData.entries())
+    const vehicleData = Object.fromEntries(formData.entries());
     vehicleData.displayName = user?.displayName;
     vehicleData.photoURL = user?.photoURL;
     vehicleData.email = user?.email;
-    vehicleData.createAt = new Date().toISOString();
+    vehicleData.createAt = new Date();
     if (vehicleData.pricePerDay < 5) {
       return toast("Price muse be greater than 5", {
         style: {
@@ -185,4 +186,4 @@ const AddVehicle = () => {
   );
 };
 
-export default AddVehicle;
+export default memo(AddVehicle);

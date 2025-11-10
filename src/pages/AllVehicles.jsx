@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import useAxios from "../hooks/useAxios";
 import toast from "react-hot-toast";
 import FullLoader from "../components/shared/loader/FullLoader";
-
+import { AiOutlineFrown } from "react-icons/ai";
 const AllVehicles = () => {
   const [vehicles, setVehicles] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -96,7 +96,15 @@ const AllVehicles = () => {
         </div>
 
         {vehicles.length === 0 ? (
-          <div>not found</div>
+          <div className="flex flex-col items-center justify-center h-64 rounded-lg p-6">
+            <AiOutlineFrown className="w-16 h-16 text-gray-400 mb-4" />
+            <h2 className="text-xl font-semibold  mb-2">
+              No Vehicles Found
+            </h2>
+            <p className="text-gray-500 text-center">
+              Sorry, we couldn't find any vehicles matching your criteria.
+            </p>
+          </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {handelPriceSort.map((vehicle) => (
@@ -119,4 +127,4 @@ const AllVehicles = () => {
   );
 };
 
-export default AllVehicles;
+export default memo(AllVehicles);
