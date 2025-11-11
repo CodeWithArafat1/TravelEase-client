@@ -1,7 +1,5 @@
 import React, { memo, useEffect, useState } from "react";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
-import UpdateVehicleModal from "../components/UpdateVehicleModal";
-import { updateModalOpen } from "../redux/features/updateModalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import useAxios from "../hooks/useAxios";
 import toast from "react-hot-toast";
@@ -20,6 +18,7 @@ const MyVehicles = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const { data } = await axiosInstance.get(
           `/myVehicles?email=${user?.email}`
@@ -27,13 +26,14 @@ const MyVehicles = () => {
         setVehicles(data);
       } catch (err) {
         toast.error(err.message);
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
   }, [axiosInstance, user]);
 
   const fetchData = async (id) => {
-    setLoading(true);
     try {
       const { data } = await axiosInstance.delete(`/vehicles/${id}`);
       if (data.deletedCount) {
@@ -42,8 +42,6 @@ const MyVehicles = () => {
       }
     } catch (err) {
       toast.error(err.message);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -131,15 +129,12 @@ const MyVehicles = () => {
                       >
                         <FaEye className="h-3 w-3 sm:h-4 sm:w-4" />
                       </Link>
-                      <button
+                      <Link
+                        to={`/update/${vehicle._id}`}
                         className="btn btn-xs btn-outline btn-warning"
-                        onClick={() => {
-                          dispatch(updateModalOpen());
-                          setSelectProd(vehicle);
-                        }}
                       >
                         <FaEdit className="h-3 w-3 sm:h-4 sm:w-4" />
-                      </button>
+                      </Link>
                       <button
                         onClick={() => {
                           setSelectProd(vehicle._id);
@@ -158,11 +153,11 @@ const MyVehicles = () => {
         )}
       </div>
 
-      <UpdateVehicleModal
+      {/* <UpdateVehicleModal
         vehicles={vehicles}
         setVehicles={setVehicles}
         selectProd={selectProd}
-      />
+      /> */}
       <ConfirmModal fetchData={fetchData} selectProd={selectProd} />
     </div>
   );

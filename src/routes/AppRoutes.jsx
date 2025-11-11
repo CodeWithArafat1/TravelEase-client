@@ -13,6 +13,7 @@ const Login = lazy(() => import("../pages/Login"));
 const Register = lazy(() => import("../pages/Register"));
 const NotFound = lazy(() => import("../pages/NotFound"));
 import PrivetRoutes from "../privetRoutes/PrivetRoutes";
+import UpdateVehicle from "../pages/UpdateVehicle";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,14 @@ const router = createBrowserRouter([
         element: (
           <PrivetRoutes>
             <ViewDetails />
+          </PrivetRoutes>
+        ),
+      },
+      {
+        path: "/update/:id",
+        element: (
+          <PrivetRoutes>
+            <UpdateVehicle />
           </PrivetRoutes>
         ),
       },

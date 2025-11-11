@@ -1,12 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./auth/authSlice";
-import updateModalReducer from './features/updateModalSlice'
-import confirmModalReducer from './features/ConfirmModalSlice'
+
+import confirmModalReducer from "./features/ConfirmModalSlice";
+import profileDropReducer from "./features/profileDropdownSlice";
 const store = configureStore({
   reducer: {
     userAuth: authReducer,
-    updateModal: updateModalReducer,
-    confirmModal: confirmModalReducer
+    confirmModal: confirmModalReducer,
+    profileModal: profileDropReducer,
   },
 });
 

@@ -51,7 +51,7 @@ const AllVehicles = () => {
     return <FullLoader />;
   }
   return (
-    <section className="w-full p-4 md:p-8 bg-base-100">
+    <section className="w-full p-8 md:p-8 bg-base-100">
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
           <h2 className="text-3xl font-bold text-base-content">All Vehicles</h2>

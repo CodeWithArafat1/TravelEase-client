@@ -179,7 +179,7 @@ const ViewDetails = () => {
                 </div>
                 <div>
                   <p className="font-bold">{vehicle.owner}</p>
-                  <p className="text-sm opacity-70">{vehicle.userEmail}</p>
+                  <p className="text-sm opacity-70">{vehicle.email}</p>
                 </div>
               </div>
               <div className="text-sm opacity-70">

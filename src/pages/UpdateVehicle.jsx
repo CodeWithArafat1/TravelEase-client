@@ -1,16 +1,30 @@
-import React, { memo } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { updateModalClose } from "../redux/features/updateModalSlice";
+import React, { memo, useEffect, useState } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 import toast from "react-hot-toast";
-import useAxios from "../hooks/useAxios";
 import { GrAlert } from "react-icons/gr";
+import useAxios from "../hooks/useAxios";
 
-const UpdateVehicleModal = ({ setVehicles, selectProd }) => {
-  const { isOpen } = useSelector((store) => store.updateModal);
-  const dispatch = useDispatch();
+import { useNavigate, useParams } from "react-router";
+import { useSelector } from "react-redux";
+
+const UpdateVehicle = () => {
   const { user } = useSelector((store) => store.userAuth);
   const axiosInstance = useAxios();
+  const { id } = useParams();
+  const [selectProd, setSelectProd] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await axiosInstance.get(`/vehicles/${id}`);
+        setSelectProd(data);
+      } catch (err) {
+        toast.error(err.message);
+      }
+    };
+    fetchData();
+  }, [axiosInstance, id]);
 
   const handelUpdateVehicle = async (e) => {
     e.preventDefault();
@@ -37,17 +51,12 @@ const UpdateVehicleModal = ({ setVehicles, selectProd }) => {
     }
     try {
       const { data } = await axiosInstance.patch(
-        `/vehicles/${selectProd._id}`,
+        `/vehicles/${id}`,
         vehicleData
       );
       if (data.modifiedCount) {
-        dispatch(updateModalClose());
-        setVehicles((prev) => {
-          return prev.map((item) =>
-            item._id === selectProd._id ? { ...item, ...vehicleData } : item
-          );
-        });
         toast.success("Your vehicles updated!");
+        navigate("/myVehicles");
       } else {
         toast.error("Place update something!");
       }
@@ -57,16 +66,8 @@ const UpdateVehicleModal = ({ setVehicles, selectProd }) => {
   };
   return (
     <>
-      <div
-        className={`fixed px-2 ${
-          isOpen ? "block" : "hidden"
-        } inset-0 bg-black/40 backdrop-blur-sm z-99 overflow-y-auto`}
-        onClick={() => dispatch(updateModalClose())}
-      >
-        <div
-          onClick={(e) => e.stopPropagation()}
-          className="max-w-2xl relative my-20 overflow-y-auto mx-auto p-6 bg-base-100 rounded-lg shadow-sm border border-gray-300/20"
-        >
+      <div className={`px-2 `}>
+        <div className="max-w-2xl relative my-20 overflow-y-auto mx-auto p-6 bg-base-100 rounded-lg shadow-sm border border-gray-300/20">
           <h2 className="text-2xl font-bold mb-6">Update Vehicle</h2>
 
           <form className="space-y-4" onSubmit={handelUpdateVehicle}>
@@ -204,17 +205,10 @@ const UpdateVehicleModal = ({ setVehicles, selectProd }) => {
               </button>
             </div>
           </form>
-
-          <button
-            className="absolute top-2 cursor-pointer right-2"
-            onClick={() => dispatch(updateModalClose())}
-          >
-            <IoCloseSharp size={25} />
-          </button>
         </div>
       </div>
     </>
   );
 };
 
-export default memo(UpdateVehicleModal);
+export default memo(UpdateVehicle);

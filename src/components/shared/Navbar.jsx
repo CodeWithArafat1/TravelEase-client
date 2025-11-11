@@ -1,19 +1,22 @@
-import { memo, useEffect, useState } from "react";
-import { FaBars, FaMoon, FaPaperPlane } from "react-icons/fa";
-import {
-  MdDarkMode,
-  MdOutlineLightMode,
-  MdTravelExplore,
-} from "react-icons/md";
+import { memo, useEffect, useRef, useState } from "react";
+import { FaBars, FaPaperPlane } from "react-icons/fa";
+import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { Link, NavLink } from "react-router";
 import NavMobile from "./NavMobile";
-import { useDispatch, useSelector } from "react-redux";
 import UserLoading from "./loader/UserLoading";
-import { logout } from "../../redux/auth/authSlice";
+import Profile from "../Profile";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  isDropClose,
+  isDropOpen,
+} from "../../redux/features/profileDropdownSlice";
 
 const Navbar = () => {
   const { user, userLoading } = useSelector((store) => store.userAuth);
+  const { isOpenDropdown } = useSelector((store) => store.profileModal);
   const dispatch = useDispatch();
+  const profileRef = useRef(null);
+
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem("theme");
     return savedTheme === "dark";
@@ -22,6 +25,20 @@ const Navbar = () => {
   const handelTheme = () => {
     setTheme((prev) => !prev);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (
+        isOpenDropdown &&
+        profileRef.current &&
+        !profileRef.current.contains(e.target)
+      ) {
+        dispatch(isDropClose());
+      }
+    };
+   document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [dispatch, isOpenDropdown]);
 
   const Btn = () => (
     <button
@@ -43,7 +60,6 @@ const Navbar = () => {
       <header className="w-full fixed shadow-sm bg-white/10   dark:bg-gray-800/40 top-0 backdrop-blur z-40">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
-            {/* <MdTravelExplore size={40} /> */}
             <FaPaperPlane size={35} />
 
             <div>
@@ -77,27 +93,28 @@ const Navbar = () => {
             <Btn />
 
             {user ? (
-              <div className="flex gap-4 items-center  cursor-pointer">
+              <div className="flex gap-4 items-center  ">
                 {userLoading ? (
                   <UserLoading />
                 ) : (
                   <div
-                    title={user?.displayName}
-                    className="w-10 h-10 rounded-full  flex items-center justify-center  font-bold border-2 border-green-400"
+                    ref={profileRef}
+                    className="w-10 h-10 rounded-full relative   flex items-center justify-center  font-bold border-2 border-green-400"
                   >
                     <img
+                      onClick={() => {
+                        dispatch(isDropOpen());
+                      }}
                       src={user?.photoURL}
                       alt=""
-                      className="rounded-full w-full"
+                      className="rounded-full w-full cursor-pointer"
                     />
+
+                    <div className="absolute top-15 right-0">
+                      <Profile />
+                    </div>
                   </div>
                 )}
-                <button
-                  onClick={() => dispatch(logout())}
-                  className="cursor-pointer rounded-lg bg-linear-to-r from-red-500 to-pink-500 py-3 px-4 text-center font-semibold text-white transition-all duration-200 hover:opacity-90"
-                >
-                  Log Out
-                </button>
               </div>
             ) : (
               <div className="ml-4 flex items-center gap-3 ">
