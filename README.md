@@ -2,7 +2,7 @@
 
 TravelEase is a full-stack MERN (MongoDB, Express, React, Node.js) web application designed to streamline the vehicle booking and trip management process. This platform allows users to explore available vehicles, list their own vehicles for rent, and manage their bookings, all through a clean and modern interface.
 
-[![React Badge](https://img.shields.io/badge/React-18.x-%2361DAFB?logo=react)](https://react.dev/)
+[![React Badge](https://img.shields.io/badge/React-19.x-%2361DAFB?logo=react)](https://react.dev/)
 [![Node.js Badge](https://img.shields.io/badge/Node.js-20.x-%23339933?logo=nodedotjs)](https://nodejs.org/)
 [![Express.js Badge](https://img.shields.io/badge/Express.js-4.x-%23000000?logo=express)](https://expressjs.com/)
 [![MongoDB Badge](https://img.shields.io/badge/MongoDB-7.x-%2347A248?logo=mongodb)](https://www.mongodb.com/)
@@ -77,12 +77,12 @@ Follow these instructions to get a copy of the project up and running on your lo
 
 ```bash
 # Clone the client repository
-git clone https://github.com/your-username/travelease-client.git
+git clone https://github.com/CodeWithArafat1/TravelEase-client
 cd travelease-client
 npm install
 
 # Clone the server repository
-git clone https://github.com/your-username/travelease-server.git
+git clone https://github.com/CodeWithArafat1/TravelEase-server
 cd travelease-server
 npm install
 ```
