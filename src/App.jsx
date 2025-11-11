@@ -20,7 +20,6 @@ const App = () => {
             displayName: currentUser.displayName,
             photoURL: currentUser.photoURL,
             emailVerified: currentUser.emailVerified,
-            accessToken: currentUser.accessToken,
           })
         );
       } else {

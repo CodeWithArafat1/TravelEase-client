@@ -4,6 +4,7 @@ import UserLoading from "./loader/UserLoading";
 import { IoClose } from "react-icons/io5";
 import { logout } from "../../redux/auth/authSlice";
 import { memo } from "react";
+import { FaPaperPlane } from "react-icons/fa";
 
 const NavMobile = ({ setShowMenu, showMenu }) => {
   const dispatch = useDispatch();
@@ -37,9 +38,7 @@ const NavMobile = ({ setShowMenu, showMenu }) => {
         </>
       ) : (
         <Link to="/" className="flex items-center gap-3">
-          <div className="flex h-10 w-10  items-center justify-center rounded-full bg-linear-to-br from-emerald-400 to-sky-500 font-bold text-white border border-gray-300 dark:border-gray-700">
-            TE
-          </div>
+         <FaPaperPlane size={35} />
           <div>
             <div className="font-extrabold text-lg">TravelEase</div>
             <div className="line-clamp-1 text-xs text-gray-500 dark:text-slate-400">

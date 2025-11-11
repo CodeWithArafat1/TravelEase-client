@@ -1,6 +1,10 @@
 import { memo, useEffect, useState } from "react";
-import { FaBars, FaMoon } from "react-icons/fa";
-import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
+import { FaBars, FaMoon, FaPaperPlane } from "react-icons/fa";
+import {
+  MdDarkMode,
+  MdOutlineLightMode,
+  MdTravelExplore,
+} from "react-icons/md";
 import { Link, NavLink } from "react-router";
 import NavMobile from "./NavMobile";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,9 +43,9 @@ const Navbar = () => {
       <header className="w-full fixed shadow-sm bg-white/10   dark:bg-gray-800/40 top-0 backdrop-blur z-40">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
-            <div className="flex h-10 w-10  items-center justify-center rounded-full bg-linear-to-br from-emerald-400 to-sky-500 font-bold text-white border border-gray-300 dark:border-gray-700">
-              TE
-            </div>
+            {/* <MdTravelExplore size={40} /> */}
+            <FaPaperPlane size={35} />
+
             <div>
               <div className="font-extrabold text-lg">TravelEase</div>
               <div className="line-clamp-1 text-xs">

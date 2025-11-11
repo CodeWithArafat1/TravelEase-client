@@ -2,12 +2,12 @@ import React, { memo } from "react";
 import { BsTwitterX } from "react-icons/bs";
 import {
   FaFacebookF,
-  FaTwitter,
   FaInstagram,
   FaLinkedinIn,
   FaEnvelope,
   FaPhone,
   FaMapMarkerAlt,
+  FaPaperPlane,
 } from "react-icons/fa";
 import { Link } from "react-router";
 
@@ -20,9 +20,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full  flex items-center justify-center font-bold border">
-                TE
-              </div>
+              <FaPaperPlane size={35} />
               <div>
                 <div className="font-extrabold text-lg">TravelEase</div>
                 <div className="text-xs dark:text-slate-300">
@@ -41,44 +39,44 @@ const Footer = () => {
             <h3 className="font-bold text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a
-                  href="/"
+                <Link
+                  to="/"
                   className="hover:text-emerald-500 transition-colors"
                 >
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/allVehicles"
+                <Link
+                  to="/allVehicles"
                   className="hover:text-emerald-500 transition-colors"
                 >
                   All Vehicles
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/addVehicles"
+                <Link
+                  to="/addVehicles"
                   className="hover:text-emerald-500 transition-colors"
                 >
                   Add Vehicle
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/myVehicles"
+                <Link
+                  to="/myVehicles"
                   className="hover:text-emerald-500 transition-colors"
                 >
                   My Vehicles
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/myBookings"
+                <Link
+                  to="/myBookings"
                   className="hover:text-emerald-500 transition-colors"
                 >
                   My Bookings
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -135,7 +133,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-gray-200 dark:border-slate-700 mt-8 pt-6 text-center text-sm dark:text-slate-300">
-          <p>© {currentYear} TravelEase. All rights reserved.</p>
+          <p>&copy; {currentYear} TravelEase. All rights reserved.</p>
         </div>
       </div>
     </footer>

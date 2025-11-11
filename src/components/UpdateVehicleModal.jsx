@@ -65,7 +65,7 @@ const UpdateVehicleModal = ({ setVehicles, selectProd }) => {
       >
         <div
           onClick={(e) => e.stopPropagation()}
-          className="max-w-2xl relative my-20 mx-auto p-6 bg-base-100 rounded-lg shadow-sm border border-gray-300/20"
+          className="max-w-2xl relative my-20 overflow-y-auto mx-auto p-6 bg-base-100 rounded-lg shadow-sm border border-gray-300/20"
         >
           <h2 className="text-2xl font-bold mb-6">Update Vehicle</h2>
 

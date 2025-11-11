@@ -98,9 +98,7 @@ const AllVehicles = () => {
         {vehicles.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-64 rounded-lg p-6">
             <AiOutlineFrown className="w-16 h-16 text-gray-400 mb-4" />
-            <h2 className="text-xl font-semibold  mb-2">
-              No Vehicles Found
-            </h2>
+            <h2 className="text-xl font-semibold  mb-2">No Vehicles Found</h2>
             <p className="text-gray-500 text-center">
               Sorry, we couldn't find any vehicles matching your criteria.
             </p>
@@ -112,16 +110,6 @@ const AllVehicles = () => {
             ))}
           </div>
         )}
-
-        <div className="flex justify-center mt-12">
-          <div className="join">
-            <button className="join-item btn">«</button>
-            <button className="join-item btn btn-active">1</button>
-            <button className="join-item btn">2</button>
-            <button className="join-item btn">3</button>
-            <button className="join-item btn">»</button>
-          </div>
-        </div>
       </div>
     </section>
   );
