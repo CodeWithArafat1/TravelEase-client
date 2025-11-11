@@ -60,7 +60,7 @@ const UpdateVehicleModal = ({ setVehicles, selectProd }) => {
       <div
         className={`fixed px-2 ${
           isOpen ? "block" : "hidden"
-        } inset-0 bg-black/40 backdrop-blur-sm z-99`}
+        } inset-0 bg-black/40 backdrop-blur-sm z-99 overflow-y-auto`}
         onClick={() => dispatch(updateModalClose())}
       >
         <div
