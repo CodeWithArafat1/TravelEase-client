@@ -20,8 +20,26 @@ const ViewDetails = () => {
   const navigate = useNavigate();
   const [vehicle, setVehicle] = useState({});
   const [loading, setLoading] = useState(true);
+  const [isDisable, setIsDisable] = useState(false);
   const [bookingLoading, setBookingLoading] = useState(false);
   const axiosInstance = useAxios();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await axiosInstance.get(
+          `/checkBooking?email=${user?.email}&&vehicleId=${id}`
+        );
+        if (data) {
+          const bookingId = data.vehicleId === id;
+          setIsDisable(bookingId);
+        }
+      } catch (err) {
+        toast.error(err.message);
+      }
+    };
+    fetchData();
+  }, [axiosInstance, id, user]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -200,31 +218,39 @@ const ViewDetails = () => {
                 </div>
               </div>
 
-              <button
-                onClick={() => handleBookNow()}
-                disabled={vehicle.availability !== "Available"}
-                className={`btn w-full ${
-                  vehicle.availability === "Available"
-                    ? "bg-linear-to-r from-emerald-500 to-sky-500 text-white"
-                    : ""
-                } `}
-              >
-                {bookingLoading ? (
-                  <>
+              <div className="flex flex-col gap-3">
+                <button
+                  onClick={() => handleBookNow()}
+                  disabled={
+                    vehicle.availability !== "Available" ||
+                    bookingLoading ||
+                    isDisable
+                  }
+                  className="
+                     w-full cursor-pointer 
+                     bg-linear-to-r from-emerald-500 to-sky-500 
+                    text-white py-3 px-4 rounded-md
+                   disabled:bg-gray-400 
+                   disabled:from-gray-400 
+                    disabled:to-gray-500 
+                    disabled:cursor-not-allowed
+"
+                >
+                  {bookingLoading ? (
                     <BtnLoader />
-                  </>
-                ) : vehicle.availability === "Available" ? (
-                  "Book Now"
-                ) : (
-                  "Not Available"
-                )}
-              </button>
+                  ) : isDisable ? (
+                    "Already Booked"
+                  ) : vehicle.availability === "Available" ? (
+                    "Book Now"
+                  ) : (
+                    "Not Available"
+                  )}
+                </button>
 
-              {vehicle.availability !== "Available" && (
-                <p className="text-sm text-error mt-2 text-center">
-                  This vehicle is currently {vehicle.availability.toLowerCase()}
-                </p>
-              )}
+                <button className=" cursor-pointer rounded-lg bg-linear-to-r from-red-500 to-pink-500 py-3 px-4 text-center font-semibold text-white transition-all duration-200 hover:opacity-90">
+                  Add to WishList
+                </button>
+              </div>
             </div>
           </div>
         </div>

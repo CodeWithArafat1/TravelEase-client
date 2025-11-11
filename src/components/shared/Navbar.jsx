@@ -36,7 +36,7 @@ const Navbar = () => {
         dispatch(isDropClose());
       }
     };
-   document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [dispatch, isOpenDropdown]);
 
@@ -99,12 +99,12 @@ const Navbar = () => {
                 ) : (
                   <div
                     ref={profileRef}
+                    onClick={() => {
+                      dispatch(isDropOpen());
+                    }}
                     className="w-10 h-10 rounded-full relative   flex items-center justify-center  font-bold border-2 border-green-400"
                   >
                     <img
-                      onClick={() => {
-                        dispatch(isDropOpen());
-                      }}
                       src={user?.photoURL}
                       alt=""
                       className="rounded-full w-full cursor-pointer"

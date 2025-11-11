@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "https://assignment-10-server-teal-zeta.vercel.app/api",
+  baseURL: "https://assignment-10-server-travelease.vercel.app/api",
 });
 
 const useAxios = () => {

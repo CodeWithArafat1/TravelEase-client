@@ -95,7 +95,7 @@ const AllVehicles = () => {
           </div>
         </div>
 
-        {vehicles.length === 0 ? (
+        {handelPriceSort.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-64 rounded-lg p-6">
             <AiOutlineFrown className="w-16 h-16 text-gray-400 mb-4" />
             <h2 className="text-xl font-semibold  mb-2">No Vehicles Found</h2>

@@ -11,6 +11,7 @@ import ConfirmModal from "../components/ConfirmModal";
 import { openConfirmModal } from "../redux/features/ConfirmModalSlice";
 
 const MyBookings = () => {
+  const [price, setPrice] = useState(0);
   const [bookings, setBookings] = useState([]);
   const [selectProd, setSelectProd] = useState(null);
   const { user } = useSelector((store) => store.userAuth);
@@ -26,7 +27,14 @@ const MyBookings = () => {
           `/myBooking?email=${user.email}`
         );
 
-        setBookings(data);
+        if (data) {
+          setBookings(data);
+          const totalPrice = data.reduce((acc, curr)=>{
+            const vehiclePrice = parseInt(curr.pricePerDay)
+            return acc + vehiclePrice
+          },0)
+          setPrice(totalPrice)
+        }
       } catch (err) {
         toast.error(err.message);
       } finally {
@@ -141,6 +149,17 @@ const MyBookings = () => {
               </tr>
             ))}
           </tbody>
+          <tfoot className="bg-base-200 text-base-content font-semibold">
+            <tr>
+              <td className="text-sm sm:text-base">Total:</td>
+          
+           
+              <td></td>
+              <td></td>
+              <td className="text-sm sm:text-base">${price}</td>
+              <td></td>
+            </tr>
+          </tfoot>
         </table>
       </div>
 
