@@ -98,7 +98,7 @@ VITE_appId=...
 # Start the development server
 npm run dev
 ```
-**1. Server-Side:**
+**2. Server-Side:**
 
 ```bash
 # Clone the repository
