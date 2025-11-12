@@ -26,7 +26,7 @@
 ---
 
 <p align="center">
-  <img src="https://i.ibb.co.com/q3TV7sLM/banner-Git.png" alt="TravelEase Project Banner" width="100%"/>
+  <img src="https://github.com/CodeWithArafat1/TravelEase-client/blob/27b4a5a1bacf2f2732ee6dd7fd7908cd7bf19816/src/assets/bannerGit_.png" alt="TravelEase Project Banner" width="100%"/>
 </p>
 
 ---
