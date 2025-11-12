@@ -14,6 +14,7 @@ const Register = lazy(() => import("../pages/Register"));
 const NotFound = lazy(() => import("../pages/NotFound"));
 import PrivetRoutes from "../privetRoutes/PrivetRoutes";
 import UpdateVehicle from "../pages/UpdateVehicle";
+import MyWishlist from "../pages/MyWishlist";
 
 const router = createBrowserRouter([
   {
@@ -65,6 +66,14 @@ const router = createBrowserRouter([
         element: (
           <PrivetRoutes>
             <UpdateVehicle />
+          </PrivetRoutes>
+        ),
+      },
+      {
+        path: "/myWishlist",
+        element: (
+          <PrivetRoutes>
+            <MyWishlist />
           </PrivetRoutes>
         ),
       },

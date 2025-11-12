@@ -38,7 +38,7 @@ const NavMobile = ({ setShowMenu, showMenu }) => {
         </>
       ) : (
         <Link to="/" className="flex items-center gap-3">
-         <FaPaperPlane size={35} />
+          <FaPaperPlane size={35} />
           <div>
             <div className="font-extrabold text-lg">TravelEase</div>
             <div className="line-clamp-1 text-xs text-gray-500 dark:text-slate-400">
@@ -145,6 +145,13 @@ const NavMobile = ({ setShowMenu, showMenu }) => {
                 onClick={() => setShowMenu(false)}
               >
                 My Bookings
+              </NavLink>
+              <NavLink
+                onClick={() => setShowMenu(false)}
+                to="/myWishlist"
+                className="nav-link"
+              >
+                My Wishlist
               </NavLink>
             </>
           )}

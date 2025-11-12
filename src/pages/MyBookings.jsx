@@ -29,11 +29,6 @@ const MyBookings = () => {
 
         if (data) {
           setBookings(data);
-          const totalPrice = data.reduce((acc, curr)=>{
-            const vehiclePrice = parseInt(curr.pricePerDay)
-            return acc + vehiclePrice
-          },0)
-          setPrice(totalPrice)
         }
       } catch (err) {
         toast.error(err.message);
@@ -41,8 +36,27 @@ const MyBookings = () => {
         setLoading(false);
       }
     };
-    fetchData();
-  }, [axiosInstance, user]);
+    if (user?.email) fetchData();
+  }, [axiosInstance, user?.email]);
+
+  useEffect(() => {
+    setLoading(true);
+    const totalAmount = async () => {
+      try {
+        const total = bookings.reduce((acc, curr) => {
+          const priceInt = parseInt(curr.pricePerDay);
+          return acc + priceInt;
+        }, 0);
+        setPrice(total);
+      } catch (err) {
+        toast.error(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    totalAmount();
+  }, [bookings]);
 
   const handelCancel = async (id) => {
     try {
@@ -149,17 +163,18 @@ const MyBookings = () => {
               </tr>
             ))}
           </tbody>
-          <tfoot className="bg-base-200 text-base-content font-semibold">
-            <tr>
-              <td className="text-sm sm:text-base">Total:</td>
-          
-           
-              <td></td>
-              <td></td>
-              <td className="text-sm sm:text-base">${price}</td>
-              <td></td>
-            </tr>
-          </tfoot>
+          {bookings && (
+            <tfoot className="bg-base-200 text-base-content font-semibold">
+              <tr>
+                <td className="text-sm sm:text-base">Total:</td>
+
+                <td></td>
+                <td></td>
+                <td className="text-sm sm:text-base">${price}</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          )}
         </table>
       </div>
 

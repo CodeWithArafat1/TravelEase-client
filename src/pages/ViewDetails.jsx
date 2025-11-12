@@ -19,42 +19,96 @@ const ViewDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [vehicle, setVehicle] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [isDisable, setIsDisable] = useState(false);
   const [bookingLoading, setBookingLoading] = useState(false);
   const axiosInstance = useAxios();
+  const [dWishlist, setDWishlist] = useState(false);
+
+  // // check wishlist
+  // useEffect(() => {
+  //   const checkWishlist = async () => {
+  //     try {
+  //       const { data } = await axiosInstance.get(
+  //         `/checkWishlist?email=${user?.email}&&vehicleId=${id}`
+  //       );
+  //       if (data) {
+  //         const checkWishlist = data.vehicleId === id;
+  //         setDWishlist(checkWishlist);
+  //       }
+  //     } catch (err) {
+  //       toast.error(err.message);
+  //     }
+  //   };
+  //   checkWishlist();
+  // }, [axiosInstance, id, user, dWishlist]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const { data } = await axiosInstance.get(
+  //         `/checkBooking?email=${user?.email}&&vehicleId=${id}`
+  //       );
+  //       if (data) {
+  //         const bookingId = data.vehicleId === id;
+  //         setIsDisable(bookingId);
+  //       }
+  //     } catch (err) {
+  //       toast.error(err.message);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [axiosInstance, id, user]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       setLoading(true);
+  //       const { data } = await axiosInstance.get(`/vehicles/${id}`);
+  //       setVehicle(data);
+  //     } catch (err) {
+  //       toast.error(err.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [id, axiosInstance]);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
-        const { data } = await axiosInstance.get(
+        const vehiclePromise = axiosInstance.get(`/vehicles/${id}`);
+        const bookingCheckPromise = axiosInstance.get(
           `/checkBooking?email=${user?.email}&&vehicleId=${id}`
         );
-        if (data) {
-          const bookingId = data.vehicleId === id;
-          setIsDisable(bookingId);
+        const wishlistCheckPromise = axiosInstance.get(
+          `/checkWishlist?email=${user?.email}&&vehicleId=${id}`
+        );
+        const [vehicleRes, bookingRes, wishlistRes] = await Promise.all([
+          vehiclePromise,
+          bookingCheckPromise,
+          wishlistCheckPromise,
+        ]);
+
+        setVehicle(vehicleRes.data);
+
+        if (bookingRes.data) {
+          setIsDisable(bookingRes.data.vehicleId === id);
+        }
+        if (wishlistRes.data) {
+          setDWishlist(wishlistRes.data.vehicleId === id);
         }
       } catch (err) {
         toast.error(err.message);
+      }finally{
+        setLoading(false)
       }
     };
+
     fetchData();
   }, [axiosInstance, id, user]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const { data } = await axiosInstance.get(`/vehicles/${id}`);
-        setVehicle(data);
-      } catch (err) {
-        toast.error(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [id, axiosInstance]);
 
   // booking
   const handleBookNow = async () => {
@@ -73,11 +127,33 @@ const ViewDetails = () => {
       };
       const { data } = await axiosInstance.post("/myBooking", bookingInfo);
       if (data.insertedId) {
-        setTimeout(() => {
-          toast.success("Booking successfully");
-          navigate("/myBookings");
-          setBookingLoading(false);
-        }, 1500);
+        toast.success("Booking successfully");
+        navigate("/myBookings");
+        setBookingLoading(false);
+      }
+    } catch (err) {
+      toast.error(err.message);
+    }finally{
+      setBookingLoading(false)
+    }
+  };
+
+  // post to wishlist
+  const handelWishlist = async () => {
+    try {
+      const wishlistInfo = {
+        email: user.email,
+        location: vehicle.location,
+        photoURL: vehicle.photoURL,
+        vehicleName: vehicle.vehicleName,
+        pricePerDay: vehicle.pricePerDay,
+        vehicleId: vehicle._id,
+        coverImage: vehicle.coverImage,
+      };
+      const { data } = await axiosInstance.post(`/myWishlist`, wishlistInfo);
+      if (data.insertedId) {
+        setDWishlist(true);
+        toast.success("Wishlist added successfully!");
       }
     } catch (err) {
       toast.error(err.message);
@@ -97,7 +173,7 @@ const ViewDetails = () => {
           <h2 className="text-2xl font-bold mb-4">Vehicle Not Found</h2>
           <button
             className="btn btn-primary"
-            onClick={() => navigate("/all-vehicles")}
+            onClick={() => navigate("/allVehicles")}
           >
             Back to Vehicles
           </button>
@@ -247,8 +323,15 @@ const ViewDetails = () => {
                   )}
                 </button>
 
-                <button className=" cursor-pointer rounded-lg bg-linear-to-r from-red-500 to-pink-500 py-3 px-4 text-center font-semibold text-white transition-all duration-200 hover:opacity-90">
-                  Add to WishList
+                <button
+                  disabled={dWishlist}
+                  onClick={handelWishlist}
+                  className={`cursor-pointer disabled:bg-gray-400 
+                   disabled:from-gray-400 
+                    disabled:to-gray-500 
+                    disabled:cursor-not-allowed rounded-lg bg-linear-to-r from-red-500 to-pink-500 py-3 px-4 text-center font-semibold text-white transition-all duration-200 hover:opacity-90`}
+                >
+                  {dWishlist ? "Already Added To Wishlist" : "Add to WishList"}
                 </button>
               </div>
             </div>

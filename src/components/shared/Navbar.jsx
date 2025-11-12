@@ -17,6 +17,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const profileRef = useRef(null);
 
+
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem("theme");
     return savedTheme === "dark";
@@ -87,6 +88,9 @@ const Navbar = () => {
                 </NavLink>
                 <NavLink to="/myBookings" className="nav-link">
                   My Bookings
+                </NavLink>
+                <NavLink to="/myWishlist" className="nav-link">
+                  My Wishlist
                 </NavLink>
               </>
             )}
