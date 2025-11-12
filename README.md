@@ -28,6 +28,9 @@
 <p align="center">
   <img src="https://github.com/CodeWithArafat1/TravelEase-client/blob/27b4a5a1bacf2f2732ee6dd7fd7908cd7bf19816/src/assets/bannerGit_.png" alt="TravelEase Project Banner" width="100%"/>
 </p>
+<p align="center">
+  <img src="https://github.com/CodeWithArafat1/TravelEase-client/blob/998e867f583ed418a80f144f6b9f0de9a4c505c1/src/assets/bannerGitDark.png" alt="TravelEase Project Banner" width="100%"/>
+</p>
 
 ---
 
