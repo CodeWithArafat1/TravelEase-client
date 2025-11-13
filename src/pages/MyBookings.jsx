@@ -163,7 +163,7 @@ const MyBookings = () => {
               </tr>
             ))}
           </tbody>
-          {bookings && (
+          {bookings.length > 0 && (
             <tfoot className="bg-base-200 text-base-content font-semibold">
               <tr>
                 <td className="text-sm sm:text-base">Total:</td>

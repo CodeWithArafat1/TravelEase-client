@@ -101,7 +101,7 @@ const NavMobile = ({ setShowMenu, showMenu }) => {
       <div
         role="dialog"
         aria-modal="true"
-        className={`relative h-full w-80 bg-white px-4 py-3 text-gray-800 shadow-xl transition-transform duration-300 ease-in-out dark:bg-slate-900 dark:text-gray-100 ${
+        className={`relative h-full w-80 bg-base-200 px-4 py-3  shadow-xl transition-transform duration-300 ease-in-out dark:bg-slate-900 dark:text-gray-100 ${
           showMenu ? "translate-x-0" : "-translate-x-full"
         }`}
         onClick={(e) => e.stopPropagation()}
