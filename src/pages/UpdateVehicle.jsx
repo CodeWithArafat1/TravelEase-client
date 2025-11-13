@@ -81,7 +81,7 @@ const UpdateVehicle = () => {
                   type="text"
                   id="vehicleName"
                   name="vehicleName"
-                  defaultValue={selectProd?.vehicleName}
+                  value={selectProd?.vehicleName}
                   className="input input-bordered w-full focus:outline-none focus:ring-0"
                 />
               </div>
@@ -96,7 +96,7 @@ const UpdateVehicle = () => {
                   id="owner"
                   readOnly
                   name="owner"
-                  defaultValue={selectProd?.owner}
+                  value={selectProd?.owner}
                   className="input input-bordered w-full focus:outline-none focus:ring-0"
                 />
               </div>
@@ -110,7 +110,7 @@ const UpdateVehicle = () => {
                 <select
                   id="category"
                   name="category"
-                  defaultValue={selectProd?.category}
+                  value={selectProd?.category}
                   className="select select-bordered w-full focus:outline-none focus:ring-0"
                 >
                   <option value="Sedan">Sedan</option>
@@ -128,7 +128,7 @@ const UpdateVehicle = () => {
                   required
                   type="number"
                   id="pricePerDay"
-                  defaultValue={selectProd?.pricePerDay}
+                  value={selectProd?.pricePerDay}
                   name="pricePerDay"
                   min="0"
                   className="input input-bordered w-full focus:outline-none focus:ring-0"
@@ -146,7 +146,7 @@ const UpdateVehicle = () => {
                   type="text"
                   id="location"
                   name="location"
-                  defaultValue={selectProd?.location}
+                  value={selectProd?.location}
                   className="input input-bordered w-full focus:outline-none focus:ring-0"
                 />
               </div>
@@ -158,7 +158,7 @@ const UpdateVehicle = () => {
                 <select
                   id="availability"
                   name="availability"
-                  defaultValue={selectProd?.availability}
+                  value={selectProd?.availability}
                   className="select select-bordered w-full focus:outline-none focus:ring-0"
                 >
                   <option value="Available">Available</option>
@@ -175,7 +175,7 @@ const UpdateVehicle = () => {
                 required
                 id="description"
                 name="description"
-                defaultValue={selectProd?.description}
+                value={selectProd?.description}
                 className="textarea textarea-bordered w-full focus:outline-none focus:ring-0"
                 rows="3"
               ></textarea>
@@ -190,7 +190,7 @@ const UpdateVehicle = () => {
                 type="url"
                 id="coverImage"
                 name="coverImage"
-                defaultValue={selectProd?.coverImage}
+                value={selectProd?.coverImage}
                 placeholder="https://example.com/image.jpg"
                 className="input input-bordered w-full focus:outline-none focus:ring-0"
               />
