@@ -1,23 +1,32 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import useAxios from "../hooks/useAxios";
 import toast from "react-hot-toast";
 import FullLoader from "../components/shared/loader/FullLoader";
 import { AiOutlineFrown } from "react-icons/ai";
 const AllVehicles = () => {
+  const axiosInstance = useAxios();
   const [vehicles, setVehicles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [priceSort, setPriceSort] = useState("newest");
   const [locationSort, setLocationSort] = useState("all");
   const [categorySort, setCategorySort] = useState("all");
-  const axiosInstance = useAxios();
+  const limit = 8;
+  const [total, setTotal] = useState(0);
+  const [totalPage, setTotalPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
     setLoading(true);
     const fetchData = async () => {
       try {
-        const { data } = await axiosInstance.get("/vehicles");
-        setVehicles(data);
+        const { data } = await axiosInstance.get(
+          `/vehicles?limit=${limit}&&skip=${currentPage * limit}`
+        );
+        setVehicles(data.data);
+        setTotal(data.count);
+        const page = Math.ceil(data.count / limit);
+        setTotalPage(page);
       } catch (err) {
         toast.error(err.message);
       } finally {
@@ -25,10 +34,15 @@ const AllVehicles = () => {
       }
     };
     fetchData();
-  }, [axiosInstance]);
+  }, [axiosInstance, currentPage]);
 
-  const category = [...new Set(vehicles.map((cat) => cat.category))];
-  const location = [...new Set(vehicles.map((loc) => loc.location))];
+  const category = useMemo(() => {
+    return [...new Set(vehicles.map((cat) => cat.category))];
+  }, [vehicles]);
+
+  const location = useMemo(() => {
+    return [...new Set(vehicles.map((loc) => loc.location))];
+  }, [vehicles]);
   const handelPriceSort = vehicles
     .filter((vehicle) => {
       if (locationSort === "all") return true;
@@ -54,7 +68,9 @@ const AllVehicles = () => {
     <section className="w-full p-8 md:p-8 bg-base-100">
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-          <h2 className="text-3xl font-bold text-base-content">All Vehicles</h2>
+          <h2 className="text-3xl font-bold text-base-content">
+            Total Vehicles ({total})
+          </h2>
 
           <div className="flex flex-wrap justify-center md:justify-end gap-2">
             <select
@@ -104,10 +120,40 @@ const AllVehicles = () => {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {handelPriceSort.map((vehicle) => (
-              <ProductCard key={vehicle._id} vehicle={vehicle} />
-            ))}
+          <div className="">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {handelPriceSort.map((vehicle) => (
+                <ProductCard key={vehicle._id} vehicle={vehicle} />
+              ))}
+            </div>
+
+            <div className="flex gap-4 justify-center items-center mt-5">
+              {currentPage > 0 && (
+                <button
+                  className="btn"
+                  onClick={() => setCurrentPage((prev) => prev - 1)}
+                >
+                  prev
+                </button>
+              )}
+              {[...Array(totalPage).keys()].map((page, index) => (
+                <button
+                  onClick={() => setCurrentPage(page)}
+                  key={index}
+                  className={`btn ${page === currentPage && "btn-primary"}`}
+                >
+                  {page + 1}
+                </button>
+              ))}
+              {currentPage < totalPage -1 && (
+                <button
+                  className="btn"
+                  onClick={() => setCurrentPage((prev) => prev + 1)}
+                >
+                  Next
+                </button>
+              )}
+            </div>
           </div>
         )}
       </div>
